@@ -1,8 +1,8 @@
 {
-    "name": "new_pro",
+    "name": "vue-urds",
     "version": "1.0.0",
-    "description": "111",
-    "author": "ty",
+    "description": "云数据库运维管理平台",
+    "author": "陶钰",
     "private": true,
     "scripts": {
         "dev": "webpack-dev-server --inline --open --progress --config build/webpack.dev.conf.js",
