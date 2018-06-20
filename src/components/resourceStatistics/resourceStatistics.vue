@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="consumption">
-        <div class="resource">暂无消费数据，请稍后再查</div>
+        <div class="resource">暂无消费数据，请稍后</div>
       </div>
     </div>
   </div>
