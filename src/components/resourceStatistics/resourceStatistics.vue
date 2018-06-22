@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div>
     <div class="wraper">
       <div class="server">
@@ -24,11 +23,7 @@
       <div class="consumption">
         <div class="resource">暂无消费数据，请稍后</div>
       </div>
-=======
-    <div>
-        资源统计改变
->>>>>>> resource
-    </div>
+  </div>
   </div>
 </template>
 <script>
