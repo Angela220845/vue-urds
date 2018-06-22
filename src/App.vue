@@ -32,8 +32,8 @@
         </template>
         <el-menu-item-group>
           <router-link to="/mysql_list">
-            <el-menu-item index="2-1">MySql服务列表</el-menu-item>    
-          </router-link>      
+            <el-menu-item index="2-1">MySql服务列表</el-menu-item>
+          </router-link>
           <router-link to="/mysql_overview">
             <el-menu-item index="2-2">概览</el-menu-item>
           </router-link>
@@ -41,14 +41,14 @@
             <el-menu-item index="2-3">监控</el-menu-item>
           </router-link>
           <router-link to="/mysql_report">
-            <el-menu-item index="2-4">巡检报告</el-menu-item> 
-          </router-link> 
+            <el-menu-item index="2-4">巡检报告</el-menu-item>
+          </router-link>
           <router-link to="/mysql_backupset">
             <el-menu-item index="2-5">备份集</el-menu-item>
-          </router-link>          
+          </router-link>
           <router-link to="/mysql_params_change">
-            <el-menu-item index="2-6">参数变更</el-menu-item> 
-          </router-link>                           
+            <el-menu-item index="2-6">参数变更</el-menu-item>
+          </router-link>
         </el-menu-item-group>
 
       </el-submenu>
@@ -73,11 +73,11 @@
         </template>
         <el-menu-item-group>
            <router-link to="/mongodb_list">
-            <el-menu-item index="5-1">MongoDB服务列表</el-menu-item>    
-          </router-link> 
+            <el-menu-item index="5-1">MongoDB服务列表</el-menu-item>
+          </router-link>
           <router-link to="/mongodb_overview">
             <el-menu-item index="5-2">概览</el-menu-item>
-          </router-link>                          
+          </router-link>
         </el-menu-item-group>
       </el-submenu>
       <router-link to="/Warning">
@@ -99,12 +99,12 @@
         </template>
         <el-menu-item-group>
           <router-link to="/sql_review_online">
-            <el-menu-item index="8-1">SQL审核上线</el-menu-item>   
+            <el-menu-item index="8-1">SQL审核上线</el-menu-item>
           </router-link>
 
           <router-link to="/historical_record">
-            <el-menu-item index="8-2">历史记录</el-menu-item>  
-          </router-link>              
+            <el-menu-item index="8-2">历史记录</el-menu-item>
+          </router-link>
         </el-menu-item-group>
       </el-submenu>
       <router-link to="/user">
@@ -115,9 +115,9 @@
       </router-link>
     </el-menu>
   </el-col>
-            
+
             <router-view></router-view>
-  
+
 <!-- </el-row> -->
     </div>
   </div>
@@ -163,4 +163,7 @@ body {
 /* .el-col-12{
   height: 100%;
 } */
+  a{
+    text-decoration: none;
+  }
 </style>
