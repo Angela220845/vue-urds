@@ -9,18 +9,35 @@
 </head>
 <body>
 <script>
-  var arr = ['21332', 'fv李四', '','edfx_21','angel','王五', '赵六12','fv李四','阿三','11s'];
-
-
-  if (arr.length != 0) {
-    // arr.sort((a, b) => a.localeCompare(b, 'zh-Hans-CN', {sensitivity: 'accent'}))
-    // arr.sort(function (a,b) {
-    //   a.localeCompare(b, 'zh-Hans-CN', {sensitivity: 'accent'})
-    // })
-    console.log(arr);
-
+  // var arr = ['21332', 'fv李四', '','edfx_21','angel','王五', '赵六12','fv李四','阿三','11s'];
+  //
+  //
+  // if (arr.length != 0) {
+  //   // arr.sort((a, b) => a.localeCompare(b, 'zh-Hans-CN', {sensitivity: 'accent'}))
+  //   // arr.sort(function (a,b) {
+  //   //   a.localeCompare(b, 'zh-Hans-CN', {sensitivity: 'accent'})
+  //   // })
+  //   console.log(arr);
+  //
+  // }
+  var arys = {
+    sds: "",
+    2: "",
+    hte: "",
+    '测试':'',
+    'cindy':'',
+    '':'',
+    '张三':''
   }
 
+  var keysArr = Object.keys(listData.fTypeListData).sort();
+  var sortObj = {};
+  for(var i=0;i<keysArr.length;i++){
+    var key = keysArr[i];
+    sortObj[key] = listData.fTypeListData[key];
+  }
+
+  console.log(objKeySort(arys));
 </script>
 </body>
 </html>

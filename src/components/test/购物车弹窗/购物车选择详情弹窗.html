@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>购物车</title>
+  <link rel="stylesheet" href="font/iconfont.css">
+  <link rel="stylesheet" href="shop.css">
+</head>
+
+<body>
+
+  <p class="touchme">点我丫！</p>
+
+  <!-- 购物车选择弹窗 -->
+  <div class="widgets-cover">
+    <div class="cover-bg" aria-label='关闭弹层'></div>
+    <div class="cover-content">
+      <div class="sku-wrap">
+        <div class="header">
+          <div class="img-wrap">
+            <img src="https://img.alicdn.com/imgextra/i1/2271013373/TB21IgifACWBuNjy0FaXXXUlXXa_!!2271013373.jpg_200x200Q50s50.jpg">
+          </div>
+          <div class="main">
+            <div class="price-wrap">
+              <span class="price">￥340.00</span>
+            </div>
+            <div class="stock">
+                <span>库存 268 件</span>
+              </div>
+            <div class="sku-info">
+              请选择
+              <span>颜色</span>
+            </div>
+           
+          </div>
+          <!-- 关闭X按钮 -->
+          <i class="sku-close iconfont">&#xe641;</i>
+        </div>
+        <div class="body">
+        
+
+          <ul class="sku-list-wrap">
+              <!-- 尺码这些 -->
+            <li> 
+              <h2>尺码</h2>
+              <div class="items" data-type="chima">
+                  <a href="javascript:;" class="radio"> 165/88</a>
+                  <a href="javascript:;" class="radio"> 170/92</a>
+                  <a href="javascript:;" class="radio"> 185/104</a>
+              </div>
+            </li>
+            <!-- 颜色套餐这些 -->
+            <li>
+              <h2>颜色</h2>
+              <div class="items" data-type="yanse">
+                  <a href="javascript:;" class="radio"> 13017铁灰色</a>
+                  <a href="javascript:;" class="radio"> 13017军绿色</a>
+                  <a href="javascript:;" class="radio"> 13017藏蓝色</a>
+              </div>
+            </li>
+          </ul>
+          <!-- 购买数量 -->
+          <div class="number-wrap">
+            <div class="number-line">
+              <label for="number">购买数量</label>
+              <span class="J_limitTxt limit-txt"></span>
+              <div class="number">
+                <button class="decrease">-</button>
+                <input type="number" id="number" value="1" min="1">
+                <button class="increase">+</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="footer trade">
+          <a href="javascript:;" class="ok">确认</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- 提示成功或者失败弹窗 -->
+  <div class="alert" style="display: none;">
+    <span></span>
+  </div>
+
+  <script src="jquery.min.js"></script>
+  <script src="shop.js"></script>
+</body>
+
+</html>
