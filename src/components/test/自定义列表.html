@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    dl dt:nth-child(n+1) {
+      clear: both;
+    }
+
+    dt, dd {
+      float: left;
+    }
+
+    dt {
+      position: relative;
+      margin-right: 30px;
+    }
+
+    dt:after {
+      content: '';
+      position: absolute;
+      border-bottom: 1px solid lightgray;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100px;
+    }
+
+    dd {
+      -webkit-margin-start: 0;
+      overflow: hidden;
+    }
+
+    /*dt:before {*/
+      /*content: '';*/
+      /*position: absolute;*/
+      /*border-right: 1px solid red;*/
+      /*right: -24px;*/
+      /*bottom: 0;*/
+      /*top: 0;*/
+    /*}*/
+    dl{
+      position: relative;
+    }
+    dl:before {
+      content: '';
+      position: absolute;
+      height: 200px;
+      border-right: 1px solid blue;
+    }
+
+  </style>
+</head>
+<body>
+<dl>
+
+  <dt>计算机</dt>
+
+  <dd>用来计算的仪器 ... ...</dd>
+
+  <dt>显示器</dt>
+  <dd>以视觉方式显示信息的装置 ... ...</dd>
+  <dt>显示器</dt>
+  <dd>以视觉方式显示信息的装置 ... ...</dd>
+  <dt>显示器</dt>
+  <dd>以视觉方式显示信息的装置 ... ...</dd>
+</dl>
+</body>
+</html>
