@@ -97,9 +97,10 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <router-link :to="'/mysql_overview?service_id='+ scope.row.service_id">
+              <router-link :to="'/mysql_list/mysql_overview?service_id='+scope.row.service_id">
               <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
               </router-link>
+              <!--<router-view></router-view>-->
               <el-button type="text" size="small">编辑</el-button>
             </template>
           </el-table-column>
@@ -154,7 +155,6 @@
 <style lang="css" scoped>
   .title {
     padding: 10px;
-    height: 1242px;
     background-color: white;
   }
 

@@ -8,108 +8,64 @@
     <!-- <router-view/> -->
     <div class="aside_nav">
       <!-- <el-row class="tac"> -->
+
       <el-col :span="12">
         <el-menu
-          default-active="2"
+          default-active="1"
           class="el-menu-vertical-demo"
           @open="handleOpen"
-          @close="handleClose"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b">
-
+          @close="handleClose">
           <router-link to="/resource_statistics">
             <el-menu-item index="1">
-              <i class="el-icon-menu"></i>
+              <i class="icon iconfont icon-resource"></i>
               <span slot="title">资源统计</span>
             </el-menu-item>
           </router-link>
-
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>MySql服务</span>
-            </template>
-            <el-menu-item-group>
-              <router-link to="/mysql_list">
-                <el-menu-item index="2-1">MySql服务列表</el-menu-item>
-              </router-link>
-              <router-link to="/mysql_overview">
-                <el-menu-item index="2-2">概览</el-menu-item>
-              </router-link>
-              <router-link to="/mysql_monitor">
-                <el-menu-item index="2-3">监控</el-menu-item>
-              </router-link>
-              <router-link to="/mysql_report">
-                <el-menu-item index="2-4">巡检报告</el-menu-item>
-              </router-link>
-              <router-link to="/mysql_backupset">
-                <el-menu-item index="2-5">备份集</el-menu-item>
-              </router-link>
-              <router-link to="/mysql_params_change">
-                <el-menu-item index="2-6">参数变更</el-menu-item>
-              </router-link>
-            </el-menu-item-group>
-
-          </el-submenu>
-          <router-link to="/data_archive">
+          <router-link to="/mysql_list">
+            <el-menu-item index="2">
+              <i class="icon iconfont icon-mysql"></i>
+              <span slot="title">MySQL服务</span>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/mongodb_list">
             <el-menu-item index="3">
-              <i class="el-icon-document"></i>
+              <i class="icon iconfont icon-mongodb"></i>
+              <span slot="title">MongoDB服务</span>
+            </el-menu-item>
+          </router-link>
+          <router-link to="/data_archive">
+            <el-menu-item index="4">
+              <i class="icon iconfont icon-digital"></i>
               <span slot="title">数据归档</span>
             </el-menu-item>
           </router-link>
-
           <router-link to="log_analysis">
-            <el-menu-item index="4">
-              <i class="el-icon-setting"></i>
+            <el-menu-item index="5">
+              <i class="icon iconfont icon-rizhi"></i>
               <span slot="title">慢日志分析</span>
             </el-menu-item>
           </router-link>
-
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>MongoDB服务</span>
-            </template>
-            <el-menu-item-group>
-              <router-link to="/mongodb_list">
-                <el-menu-item index="5-1">MongoDB服务列表</el-menu-item>
-              </router-link>
-              <router-link to="/mongodb_overview">
-                <el-menu-item index="5-2">概览</el-menu-item>
-              </router-link>
-            </el-menu-item-group>
-          </el-submenu>
           <router-link to="/Warning">
             <el-menu-item index="6">
-              <i class="el-icon-setting"></i>
+              <i class="icon iconfont icon-gaojingtai"></i>
               <span slot="title">告警</span>
             </el-menu-item>
           </router-link>
           <router-link to="/approval">
             <el-menu-item index="7">
-              <i class="el-icon-setting"></i>
+              <i class="icon iconfont icon-shengpi"></i>
               <span slot="title">审批</span>
             </el-menu-item>
           </router-link>
-          <el-submenu index="8">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>SQL上线</span>
-            </template>
-            <el-menu-item-group>
-              <router-link to="/sql_review_online">
-                <el-menu-item index="8-1">SQL审核上线</el-menu-item>
-              </router-link>
-
-              <router-link to="/historical_record">
-                <el-menu-item index="8-2">历史记录</el-menu-item>
-              </router-link>
-            </el-menu-item-group>
-          </el-submenu>
+          <router-link to="/sql_review_online">
+            <el-menu-item index="8">
+              <i class="icon iconfont icon-fabu"></i>
+              <span slot="title">SQL上线</span>
+            </el-menu-item>
+          </router-link>
           <router-link to="/user">
             <el-menu-item index="9">
-              <i class="el-icon-setting"></i>
+              <i class="icon iconfont icon-yonghu"></i>
               <span slot="title">用户</span>
             </el-menu-item>
           </router-link>
@@ -172,4 +128,17 @@
   .el-menu {
     border: none;
   }
+
+  .el-menu-item, .el-submenu__title {
+    height: 104px;
+    line-height: 104px;
+  }
+
+  .el-menu-item span {
+    margin-left: 5px;
+  }
+  /*.el-menu-item,.is-active{*/
+    /*background-color: #ccc;*/
+  /*}*/
+
 </style>
