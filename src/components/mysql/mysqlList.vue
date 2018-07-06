@@ -2,7 +2,6 @@
 
   <div>
     <div class="title">
-      </br>
       <!--<span>区域：</span>-->
       <!--<el-select v-model="value8" filterable placeholder="请选择可用区" :filter-method="filterMethod()">-->
       <!--<el-option-->
