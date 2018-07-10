@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  let parentList = {
+    "archiver":'一',
+    "slow_log":'二',
+    "mongodb_service":'三',
+    "alert":'四',
+    "sql":'五',
+    "db_service":'六'
+  };
+  let names = Object.keys(parentList)
+
+  let bigArr = [];
+
+  for (const listName of names) {
+    let child = [],
+      parent = {};
+    for (const item of list) {
+      if (item.parent === listName) {
+        child.push(item);
+      }
+    }
+    console.log(child);
+    parent[parentList[listName]] = child;
+    bigArr.push(parent);
+  }
+
+  console.log(bigArr,);
+</script>
+</body>
+</html>

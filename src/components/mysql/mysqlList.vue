@@ -111,7 +111,7 @@
 
 <script>
   import Table from './components/c_table.vue'
-  import {serviceList} from './model.js'
+  import {serviceList} from './model/mysql_list_model.js'
 
   export default {
     components: {
