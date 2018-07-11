@@ -1,4 +1,4 @@
-<template>
+o<template>
   <div id="app">
     <el-row>
       <el-col :span="24">
