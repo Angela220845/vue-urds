@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="this.getZoneList">主要按钮</el-button>
+    <el-button type="primary" @click="this.getZoneList">点击登录</el-button>
   </div>
 </template>
 
@@ -16,11 +16,11 @@
     },
     methods: {
       getZoneList() {
-        this.$http.get('/zone/list').then((res) => {
-          console.log(res)
-        })
-      console.log(this)
-  
+        // this.$http.get('/zone/list').then((res) => {
+        //   console.log(res)
+        // })
+      console.log('登录')
+
         // console.log(this.testApi.$axios)
       }
     }
