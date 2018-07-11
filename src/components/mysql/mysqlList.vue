@@ -16,7 +16,7 @@
       <!--<el-button type="primary">搜索</el-button>-->
       <template>
         <el-table
-          :data="tableData"
+          :data="serviceList"
           border
           style="width: 100%">
           <el-table-column
@@ -118,7 +118,7 @@
       Table
     },
     created(){
-      this.tableData = serviceList
+      this.serviceList = serviceList
     },
     data() {
       return {
@@ -134,7 +134,7 @@
         }],
         value8: '',
         input: '',
-        tableData: []
+        serviceList: []
 
 
       }

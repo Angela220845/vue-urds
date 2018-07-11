@@ -71,34 +71,28 @@
       </el-tab-pane>
       <el-tab-pane label="备份集">
         <el-table
-          :data="tableData"
+          :data="backupList"
+          height="250"
+          header-align="center"
           border
           style="width: 100%">
           <el-table-column
-            fixedID
-            prop=""
+            prop="instId"
             label="MySQL实例"
-            width="100">
+            width="180">
           </el-table-column>
           <el-table-column
-            prop=""
-            label="备份集"
-            width="120">
+            prop="setId"
+            label="备份集ID"
+            width="180">
           </el-table-column>
           <el-table-column
-            prop=""
-            label="实例组"
-            width="120">
+            prop="gtid"
+            label="gtid">
           </el-table-column>
           <el-table-column
-            prop=""
-            label="gtid"
-            width="100">
-          </el-table-column>
-          <el-table-column
-            prop=""
-            label="备份集时间"
-            width="100">
+            prop="backupTime"
+            label="备份集时间">
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -108,17 +102,18 @@
 
 <script>
 
-  import {overview_list} from './model/mysql_overview_model'
+  import {overview_list,backupList} from './model/mysql_overview_model'
   //概览，访问方式，运行状态，规格，
   export default {
     created() {
       this.overview_list = overview_list
+      this.backupList = backupList
       this.getData()
     },
     data() {
       return {
         overview_list: [],
-        tableData: []
+        backupList:[]
       }
     },
     methods: {
@@ -135,9 +130,11 @@
   div[role='tabpanel'] {
     padding-left: 40%;
   }
+
   div[role='tabpanel']:last-child {
-    padding-left:0;
+    padding-left: 0;
   }
+
   ul > li {
     margin-top: 20px;
     color: #909399;

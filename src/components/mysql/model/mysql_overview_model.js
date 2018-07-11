@@ -58,4 +58,10 @@ export const overview_list = [{
   zone_id: "zone-sample",
   zone_name: "示例"
 }]
+export const backupList=[{
+  backupTime: "2018-07-09 14:12:19 CST",
+  gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+  instId: "mysql-wf41qd",
+  setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+}]
 
