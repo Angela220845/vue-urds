@@ -1,7 +1,7 @@
 .DS_Store
 node_modules/
-/dist/test/
-/src/components/
+/dist/
+/test/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
