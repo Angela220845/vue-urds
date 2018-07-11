@@ -146,7 +146,6 @@
       },
       handleClick(row) {
         console.log(row);
-        console.log(this.tableData);
       }
     }
   }

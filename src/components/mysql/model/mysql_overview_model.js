@@ -8,12 +8,12 @@ export const overview_list = [{
   is_mgr_enable: false,
   is_ra_enable: false,
   is_rws_enable: false,
-  master_mysql_id: "mysql-baxxe5",
+  master_mysql_id: "mysql-b5",
   max_connection: "1000",
   mysql_admin_password: "",
   mysql_group_id: "mysql-group-yumgm3",
   mysql_instances: [{
-    mysql_id: "mysql-baxxe5",
+    mysql_id: "mysql-bx5",
     is_master: true,
     is_write: false,
     cpu: "",
@@ -34,7 +34,7 @@ export const overview_list = [{
       disk: "",
       ip: "172.16.122.2",
       port: "4752",
-      role: "STATUS_MYSQL_MASTER",
+      role: "STATUS_MYSQL_SLAVE",
       sip: "(SIP)",
       status: "STATUS_MYSQL_HEALTH_OK"
     }],
@@ -58,10 +58,66 @@ export const overview_list = [{
   zone_id: "zone-sample",
   zone_name: "示例"
 }]
-export const backupList=[{
+export const backupList = [{
   backupTime: "2018-07-09 14:12:19 CST",
   gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
   instId: "mysql-wf41qd",
   setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
-}]
+},
+  {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }, {
+    backupTime: "2018-07-09 14:12:19 CST",
+    gtid: "f37b2ee0-833e-11e8-ad0b-0242ac107a01:1-177",
+    instId: "mysql-wf41qd",
+    setId: "manual_mysql-wf41qd_2018_07_09_14_12_19"
+  }]
 
