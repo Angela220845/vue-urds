@@ -157,7 +157,6 @@
   li > div:first-child {
     float: left;
     width: 150px;
-    color: black;
   }
 
   #pane-4 {
