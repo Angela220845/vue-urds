@@ -16,7 +16,7 @@
       <!--<el-button type="primary">搜索</el-button>-->
       <template>
         <el-table
-          :data="tableData"
+          :data="serviceList"
           border
           style="width: 100%">
           <el-table-column
@@ -111,14 +111,14 @@
 
 <script>
   import Table from './components/c_table.vue'
-  import {serviceList} from './model/model.js'
+  import {serviceList} from './model/mysql_list_model.js'
 
   export default {
     components: {
       Table
     },
     created(){
-      this.tableData = serviceList
+      this.serviceList = serviceList
     },
     data() {
       return {
@@ -134,7 +134,7 @@
         }],
         value8: '',
         input: '',
-        tableData: []
+        serviceList: []
 
 
       }
@@ -146,7 +146,6 @@
       },
       handleClick(row) {
         console.log(row);
-        console.log(this.tableData);
       }
     }
   }

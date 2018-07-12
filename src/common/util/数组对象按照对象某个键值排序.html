@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var list = []
+
+    for (var i = 1; i <= 100; i++) {
+      list.push('172.20.6.' + i)
+
+    }
+    list.sort(function () {
+      return 0.5 - Math.random()
+    })
+
+    var sourceList = []
+
+
+    for (var i = 0; i < list.length; i++) {
+      // 
+      sourceList.push({
+        disk: '222',
+        ip: list[i]
+      })
+      // console.log(sourceList)
+      //   arr2 = (list[i]).split('.')
+      //   arr1.push(arr2[3])
+      //   arr1.sort(function sortNumber(a, b) {
+      //   return a - b
+      // })
+    }
+    for (var i = 0; i < sourceList.length; i++) {
+      let names = Object.keys(sourceList[i]) //['disk','ip']
+      var arr1 = []
+      var arr2 = []
+      var obj = {}
+      names.indexOf('ip')//1
+      if (names == 'ip') {
+        arr1 = sourceList[i][key].split('.')
+        arr2.push(arr1[3])
+        console.log(arr2);
+      }
+
+    }
+  </script>
+</body>
+
+</html>
