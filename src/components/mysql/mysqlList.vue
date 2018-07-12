@@ -97,11 +97,45 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <router-link :to="'/mysql_list/mysql_overview?service_id='+scope.row.service_id">
-              <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-              </router-link>
-              <!--<router-view></router-view>-->
-              <el-button type="text" size="small">编辑</el-button>
+              <el-dropdown trigger="click">
+                <span class="el-dropdown-link">
+                  查看<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <router-link :to="'/mysql_list/mysql_overview?service_id='+scope.row.service_id">
+                    <el-dropdown-item>概览</el-dropdown-item>
+                  </router-link>
+                  <router-link :to="'/mysql_list/mysql_monitor?service_id='+scope.row.service_id">
+                    <el-dropdown-item>监控</el-dropdown-item>
+                  </router-link>
+                  <router-link :to="'/mysql_list/mysql_report?service_id='+scope.row.service_id">
+                    <el-dropdown-item>巡检报告</el-dropdown-item>
+                  </router-link>
+                  <router-link :to="'/mysql_list/mysql_backupset?service_id='+scope.row.service_id">
+                    <el-dropdown-item>备份集</el-dropdown-item>
+                  </router-link>
+                  <router-link :to="'/mysql_list/mysql_params_change?service_id='+scope.row.service_id">
+                    <el-dropdown-item>参数变更</el-dropdown-item>
+                  </router-link>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <el-dropdown trigger="click" @command="open2">
+                <span class="el-dropdown-link">
+                  操作<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>停用数据库</el-dropdown-item>
+                  <el-dropdown-item>停用高可用</el-dropdown-item>
+                  <el-dropdown-item>手工备份</el-dropdown-item>
+                  <el-dropdown-item>恢复到备份</el-dropdown-item>
+                  <el-dropdown-item>恢复到时间点</el-dropdown-item>
+                  <el-dropdown-item>销毁</el-dropdown-item>
+                  <el-dropdown-item>水平扩展</el-dropdown-item>
+                  <el-dropdown-item>修改告警对象</el-dropdown-item>
+                  <el-dropdown-item>修改实例规格</el-dropdown-item>
+                  <el-dropdown-item>重置用户密码</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
           </el-table-column>
         </el-table>
@@ -112,13 +146,13 @@
 
 <script>
   import Table from './components/c_table.vue'
-  import {serviceList} from './model.js'
+  import {serviceList} from './model/mysql_list_model.js'
 
   export default {
     components: {
       Table
     },
-    created(){
+    created() {
       this.tableData = serviceList
     },
     data() {
@@ -148,6 +182,23 @@
       handleClick(row) {
         console.log(row);
         console.log(this.tableData);
+      },
+      open2() {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       }
     }
   }
@@ -168,6 +219,10 @@
 
   .el-button {
     margin-left: 15px;
+  }
+
+  .el-dropdown > span {
+    color: #409EFF;
   }
 
 </style>
