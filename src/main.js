@@ -8,8 +8,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
 import '../static/css/reset.css'
 import './assets/fonts/iconfont.css';
+import echarts from 'echarts'
 
 Vue.prototype.$http = axios
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
     // ***element ui 开始
