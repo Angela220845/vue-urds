@@ -2,18 +2,19 @@
 
   <div>
     <div class="title">
-      <!--<span>区域：</span>-->
-      <!--<el-select v-model="value8" filterable placeholder="请选择可用区" :filter-method="filterMethod()">-->
-      <!--<el-option-->
-      <!--v-for="item in options"-->
-      <!--:key="item.value"-->
-      <!--:label="item.label"-->
-      <!--:value="item.value">-->
-      <!--</el-option>-->
-      <!--</el-select>-->
-      <!--<span>关键字：</span>-->
-      <!--<el-input v-model="input" class="el-input" placeholder="请输入关键词"></el-input>-->
-      <!--<el-button type="primary">搜索</el-button>-->
+
+      <span>区域：</span>
+      <el-select v-model="value8" filterable placeholder="请选择可用区" :filter-method="filterMethod()">
+      <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+      </el-option>
+      </el-select>
+      <span>关键字：</span>
+      <el-input v-model="input" class="el-input" placeholder="请输入关键词"></el-input>
+      <el-button type="primary">搜索</el-button>
       <template>
         <el-table
           :data="serviceList"
@@ -118,21 +119,21 @@
                   </router-link>
                 </el-dropdown-menu>
               </el-dropdown>
-              <el-dropdown trigger="click" @command="open2">
+              <el-dropdown trigger="click" @command="handCommand">
                 <span class="el-dropdown-link">
                   操作<i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>停用数据库</el-dropdown-item>
-                  <el-dropdown-item>停用高可用</el-dropdown-item>
-                  <el-dropdown-item>手工备份</el-dropdown-item>
-                  <el-dropdown-item>恢复到备份</el-dropdown-item>
-                  <el-dropdown-item>恢复到时间点</el-dropdown-item>
-                  <el-dropdown-item>销毁</el-dropdown-item>
-                  <el-dropdown-item>水平扩展</el-dropdown-item>
-                  <el-dropdown-item>修改告警对象</el-dropdown-item>
-                  <el-dropdown-item>修改实例规格</el-dropdown-item>
-                  <el-dropdown-item>重置用户密码</el-dropdown-item>
+                  <el-dropdown-item command="a" @click.native="test">停用数据库</el-dropdown-item>
+                  <el-dropdown-item command="b">停用高可用</el-dropdown-item>
+                  <el-dropdown-item command="c">手工备份</el-dropdown-item>
+                  <el-dropdown-item command="d">恢复到备份</el-dropdown-item>
+                  <el-dropdown-item command="e">恢复到时间点</el-dropdown-item>
+                  <el-dropdown-item command="f">销毁</el-dropdown-item>
+                  <el-dropdown-item command="g">水平扩展</el-dropdown-item>
+                  <el-dropdown-item command="h">修改告警对象</el-dropdown-item>
+                  <el-dropdown-item command="i">修改实例规格</el-dropdown-item>
+                  <el-dropdown-item command="j">重置用户密码</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -182,7 +183,7 @@
         console.log(row);
         console.log(this.tableData);
       },
-      open2() {
+      handCommand(command) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -198,6 +199,9 @@
             message: '已取消删除'
           });
         });
+      },
+      test(){
+        console.log('测试点击事件');
       }
     }
   }

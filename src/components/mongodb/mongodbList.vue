@@ -1,10 +1,9 @@
 <template>
     <div>
-        mongoDB服务列表
+        mongo列表
     </div>
 </template>
+
 <script>
-export default {
-    
-}
+    export default {};
 </script>

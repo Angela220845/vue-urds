@@ -1,66 +1,113 @@
 export const monitor = [{
-  service_id:111,
-  db_service_name:'服务1',
-  mysql_group_id:'实例组ID-1',
-  service_class_name:'服务规格-1',
-  create_time:'创建时间-1',
-  monitor:'监控-1',
-  uptime:'Uptime-1',
-  qps:'QPS-1',
-  zone_name:'可用区名',
-  run_status:'运行状态-1',
-  uguard_status:'高可用状态-1',
-  own_user_name:'用户-1',
-  temp_instances:'临时实例-1',
-  archite:'架构-1',
-  action:'操作-1'
-}, {
-  service_id:222,
-  db_service_name:'服务2',
-  mysql_group_id:'实例组ID-2',
-  service_class_name:'服务规格-2',
-  create_time:'创建时间-2',
-  monitor:'监控-2',
-  uptime:'Uptime-2',
-  qps:'QPS-2',
-  zone_name:'可用区名-2',
-  run_status:'运行状态-2',
-  uguard_status:'高可用状态-2',
-  own_user_name:'用户-1',
-  temp_instances:'临时实例-2',
-  archite:'架构-2',
-  action:'操作-2'
-}, {
-  service_id:333,
-  db_service_name:'服务3',
-  mysql_group_id:'实例组ID-3',
-  service_class_name:'服务规格-3',
-  create_time:'创建时间-3',
-  monitor:'监控-3',
-  uptime:'Uptime-3',
-  qps:'QPS-3',
-  zone_name:'可用区名-3',
-  run_status:'运行状态-3',
-  uguard_status:'高可用状态-3',
-  own_user_name:'用户-3',
-  temp_instances:'临时实例-3',
-  archite:'架构-3',
-  action:'操作-3'
-}, {
-  service_id:4,
-  db_service_name:'服务4',
-  mysql_group_id:'实例组ID-4',
-  service_class_name:'服务规格-4',
-  create_time:'创建时间-4',
-  monitor:'监控-4',
-  uptime:'Uptime-4',
-  qps:'QPS-4',
-  zone_name:'可用区名-4',
-  run_status:'运行状态-4',
-  uguard_status:'高可用状态-4',
-  own_user_name:'用户-4',
-  temp_instances:'临时实例-4',
-  archite:'架构-4',
-  action:'操作-4'
+  selectList: [{
+    serviceType: '',
+    serviceTypeList: [{
+      value: "选项1",
+      label: "主"
+    },
+      {
+        value: "选项2",
+        label: "从"
+      }
+    ],
+    monitorType: "",
+    monitorTypeList: [{
+      value: "选项1",
+      label: "资源消耗"
+    },
+      {
+        value: "选项2",
+        label: "MySQL数据库请求状态"
+      },
+      {
+        value: "选项3",
+        label: "MySQL数据库连接状态"
+      },
+      {
+        value: "选项4",
+        label: "MySQL数据库数据状态"
+      },
+    ]
+  }],
+  cpuOption: {
+    title: {
+      text: 'CPU使用率',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }, ramOption: {
+    title: {
+      text: '内存使用量',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }, flowOption: {
+    title: {
+      text: '网络流量',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }, diskOption: {
+    title: {
+      text: '磁盘使用量',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }
 }]
-
