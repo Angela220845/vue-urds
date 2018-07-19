@@ -2,19 +2,19 @@
 
   <div>
     <div class="title">
-      
-      <!--<span>区域：</span>-->
-      <!--<el-select v-model="value8" filterable placeholder="请选择可用区" :filter-method="filterMethod()">-->
-      <!--<el-option-->
-      <!--v-for="item in options"-->
-      <!--:key="item.value"-->
-      <!--:label="item.label"-->
-      <!--:value="item.value">-->
-      <!--</el-option>-->
-      <!--</el-select>-->
-      <!--<span>关键字：</span>-->
-      <!--<el-input v-model="input" class="el-input" placeholder="请输入关键词"></el-input>-->
-      <!--<el-button type="primary">搜索</el-button>-->
+
+      <span>区域：</span>
+      <el-select v-model="value8" filterable placeholder="请选择可用区" :filter-method="filterMethod()">
+      <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+      </el-option>
+      </el-select>
+      <span>关键字：</span>
+      <el-input v-model="input" class="el-input" placeholder="请输入关键词"></el-input>
+      <el-button type="primary">搜索</el-button>
       <template>
         <el-table
           :data="tableData"

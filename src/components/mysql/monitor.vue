@@ -10,7 +10,10 @@
         </el-option>
       </el-select>
       <Datepicker></Datepicker>
-      <div id="resourceChart" :style="{width: '1200px', height: '400px'}"></div>
+      <div id="cpuChart" :style="{width: '875px', height: '300px'}"></div>
+      <div id="ramChart" :style="{width: '875px', height: '300px'}"></div>
+      <div id="flowChart" :style="{width: '875px', height: '300px'}"></div>
+      <div id="diskChart" :style="{width: '875px', height: '300px'}"></div>
     </div>
   </div>
 </template>
@@ -20,6 +23,7 @@
     monitor
   } from './model/monitor.js';
   import Datepicker from './components/datepicker.vue'
+
   export default {
     components: {
       Datepicker
@@ -28,8 +32,11 @@
       this.monitorData = monitor
       this.serviceTypeList = monitor[0].selectList[0].serviceTypeList
       this.monitorTypeList = monitor[0].selectList[0].monitorTypeList
-      this.echartsData = monitor[0].echartsOption
-      console.log(monitor)
+      this.cpuData = monitor[0].cpuOption
+      this.ramData = monitor[0].ramOption
+      this.flowData = monitor[0].flowOption
+      this.diskData = monitor[0].diskOption
+      console.log(monitor[0].cpuOption.title)
     },
     mounted() {
       this.drawResourceChart();
@@ -46,8 +53,14 @@
     },
     methods: {
       drawResourceChart() {
-        let resourceChart = this.$echarts.init(document.getElementById('resourceChart'))
-        resourceChart.setOption(this.echartsData);
+        let cpuChart = this.$echarts.init(document.getElementById('cpuChart'))
+        let ramChart = this.$echarts.init(document.getElementById('ramChart'))
+        let flowChart = this.$echarts.init(document.getElementById('flowChart'))
+        let diskChart = this.$echarts.init(document.getElementById('diskChart'))
+        cpuChart.setOption(this.cpuData);
+        ramChart.setOption(this.ramData);
+        flowChart.setOption(this.flowData);
+        diskChart.setOption(this.diskData);
       }
     }
   }
@@ -57,10 +70,11 @@
   .title {
     padding: 10px;
     background-color: white;
+    height: 906px;
+    overflow: auto;
   }
-  
-  #myChart {
-    border: 1px dashed gray;
+  #cpuChart {
     margin-top: 20px;
   }
+
 </style>

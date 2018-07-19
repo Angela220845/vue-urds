@@ -2,9 +2,9 @@ export const monitor = [{
   selectList: [{
     serviceType: '',
     serviceTypeList: [{
-        value: "选项1",
-        label: "主"
-      },
+      value: "选项1",
+      label: "主"
+    },
       {
         value: "选项2",
         label: "从"
@@ -12,9 +12,9 @@ export const monitor = [{
     ],
     monitorType: "",
     monitorTypeList: [{
-        value: "选项1",
-        label: "资源消耗"
-      },
+      value: "选项1",
+      label: "资源消耗"
+    },
       {
         value: "选项2",
         label: "MySQL数据库请求状态"
@@ -29,9 +29,69 @@ export const monitor = [{
       },
     ]
   }],
-  echartsOption: {
+  cpuOption: {
     title: {
-      text: '资源消耗',
+      text: 'CPU使用率',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }, ramOption: {
+    title: {
+      text: '内存使用量',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }, flowOption: {
+    title: {
+      text: '网络流量',
+      x: 'center',
+      y: 'top',
+      textStyle: {
+        fontWeight: 'normal',
+        color: '#409EFF'
+      }
+    },
+    tooltip: {},
+    xAxis: {
+      data: ["2018/7/6", "2018/7/7", "2018/7/8", "2018/7/9", "2018/7/10", "2018/7/11", "2018/7/12", "2018/7/13", "2018/7/14"]
+    },
+    yAxis: {},
+    series: [{
+      name: '销量',
+      type: 'line',
+      data: [5, 10, 36, 10, 21, 20, 34, 13, 12]
+    }]
+  }, diskOption: {
+    title: {
+      text: '磁盘使用量',
       x: 'center',
       y: 'top',
       textStyle: {
