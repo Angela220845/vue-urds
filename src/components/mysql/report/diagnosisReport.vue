@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     getDetailsData() {
-      this.params.key = this.$route.query.key
+      this.params.key = this.$route.query.key``
       this.params.service_id = this.$route.query.service_id
       console.log(this.params);//请求参数
     }
