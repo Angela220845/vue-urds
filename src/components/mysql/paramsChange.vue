@@ -2,21 +2,22 @@
   <div>
     <div class="title">
       <span>MYSQL服务：</span>
-      <el-select v-model="mysqlServiceId" filterable placeholder="请选择可用区" :filter-method="filterMethod()">
+      <el-select v-model="mysqlServiceId" filterable placeholder="请选择Mysql服务" :filter-method="filterMethod()">
         <el-option v-for="item in mysqlIdList" :key="item.value" :label="item.label" :value="item.value">
         </el-option>
       </el-select>
-      <el-table :data="reportList" border style="width: 100%">
-        <el-table-column prop="Timestamp" label="巡检报告触发时间" width="180">
+      <el-table :data="paramsList" border style="width: 100%">
+        <el-table-column prop="option" label="参数名">
         </el-table-column>
-        <el-table-column prop="ServerId" label="主机名" width="180">
+        <el-table-column prop="default_value" label="参数默认值">
         </el-table-column>
-        <el-table-column prop="MysqlId" label="MySQL实例ID">
+        <el-table-column prop="wait_timeout" label="运行参数值">
         </el-table-column>
-        <el-table-column label="巡检报告状态">
-          <template slot-scope="scope">
-            <router-link :to="'/mysql_list/mysql_report/diagnosis_report?key='+scope.row.Timestamp+'&service_id='+scope.row.ServerId"><span>点击查看</span></router-link>
-          </template>
+        <el-table-column prop="is_need_restart" label="是否重启">
+        </el-table-column>
+        <el-table-column prop="scope" label="可修改参数值">
+        </el-table-column>
+        <el-table-column prop="desc" label="参数描述">
         </el-table-column>
       </el-table>
     </div>
@@ -26,17 +27,17 @@
 
 <script>
   import {
-    reportList,
+    paramsList,
     mysqlIdList
   } from './model/change_params_model'
   export default {
     created() {
-      this.reportList = reportList
+      this.paramsList = paramsList
       this.mysqlIdList = mysqlIdList
     },
     data() {
       return {
-        reportList: [],
+        paramsList: [],
         mysqlIdList: [],
         mysqlServiceId: ''
       }
