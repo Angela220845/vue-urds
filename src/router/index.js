@@ -69,7 +69,7 @@ export default new Router({
     {
       path: '/mysql_list/mysql_backupset',
       component: resolve =>
-        require(['../components/mysql/backup.vue'], resolve),
+        require(['../components/mysql/backup/backup.vue'], resolve),
       meta: {
         title: '备份集'
       }
