@@ -53,9 +53,17 @@ export default new Router({
     {
       path: '/mysql_list/mysql_report',
       component: resolve =>
-        require(['../components/mysql/report.vue'], resolve),
+        require(['../components/mysql/report/report.vue'], resolve),
       meta: {
         title: '巡检报告'
+      }
+    },
+    {
+      path: '/mysql_list/mysql_report/diagnosis_report',
+      component: resolve =>
+        require(['../components/mysql/report/diagnosisReport.vue'], resolve),
+      meta: {
+        title: '巡检报告详情'
       }
     },
     {
