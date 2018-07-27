@@ -17,11 +17,11 @@
         </el-table-column>
         <el-table-column prop="operating" label="操作">
           <template slot-scope="scope">
-            <span @click="" class="backup">手工备份</span>
+                <span @click="openDialog" class="backup">手工备份</span>
           </template>
         </el-table-column>
       </el-table>
-      <Dialog></Dialog>
+      <Dialog :show="visible" :visible="visible" @dialogData="closeDialog"></Dialog>
 
     </div>
   </div>
@@ -47,12 +47,20 @@
       return {
         backupList: [],
         mysqlIdList: [],
-        mysqlServiceId: ''
+        mysqlServiceId: '',
+        visible: false
       }
     },
     methods: {
       filterMethod() {
         console.log(this.mysqlServiceId)
+      },
+      openDialog() {
+        this.visible = true//弹框的打开是父组件决定的，而关闭按钮在子组件中，所以，父组件需要拿到子组件反馈的状态。
+        console.log(scope.row.instId+scope.row.setId)
+      },
+      closeDialog(data) {
+        this.visible = data
       }
     }
   }
