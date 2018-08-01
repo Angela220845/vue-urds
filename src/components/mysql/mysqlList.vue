@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="title">
-    
+
             <span>区域：</span>
             <el-select v-model="zoneName" filterable placeholder="请选择可用区" :filter-method="filterMethod()">
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
@@ -65,6 +65,12 @@
                     prop="run_status"
                     label="运行状态"
                     width="120">
+                    <template slot-scope="scope">
+                      <span v-if="scope.row.run_status==1" style="color:green">运行</span>
+                      <span v-else-if="scope.row.run_status==0" style="color:red">停止</span>
+                      <span v-else-if="scope.row.run_status==3" style="color:orange">异常</span>
+                      <span v-else-if="scope.row.run_status=='APPROVALING'" style="color:gray">审批中</span>
+                    </template>
                   </el-table-column>
                   <el-table-column
                     prop="uguard_status"
@@ -86,7 +92,7 @@
                     label="架构"
                     width="100">
                   </el-table-column>
-                                
+
                   <el-table-column
                     fixed="right"
                     label="操作"
@@ -144,7 +150,7 @@
     <step-modal>
     </step-modal>
 </template>
-  
+
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -157,11 +163,11 @@
 
 <script>
     import StepModal from './components/stopHighAvailability.vue'
-    
+
     import {
         serviceList,zoneList
     } from './model/mysql_list_model.js'
-    
+
     export default {
         components: {
             StepModal
@@ -179,13 +185,13 @@
                 zoneName:'',
                 serviceList: [],
                 dialogVisible: false
-    
+
             }
         },
         methods: {
             filterMethod() {
                 console.log('获取对应可用区主机');
-    
+
             },
             handleClick(row) {
                 console.log(row);
@@ -222,31 +228,31 @@
         padding: 10px;
         background-color: white;
     }
-    
+
     .el-select {
         margin-right: 20px;
     }
-    
+
     .el-input {
         width: 217px;
     }
-    
+
     .el-button {
         margin-left: 15px;
     }
-    
+
     .el-dropdown>span {
         color: #409EFF;
     }
-    
+
     .el-dropdown:hover {
         cursor: pointer;
     }
-    
+
     .el-dropdown:nth-child(1) {
         margin-right: 15px
     }
-    
+
     .el-dialog__wrapper>.el-dialog {
         width: 70%
     }
