@@ -9,6 +9,8 @@
   //   NewLeadApi
   // } from './api.js'
   export default {
+    created(){
+    },
     data() {
       return {
         // testApi: new NewLeadApi()
@@ -16,11 +18,15 @@
     },
     methods: {
       getZoneList() {
-        // this.$http.get('/zone/list').then((res) => {
-        //   console.log(res)
-        // })
-      console.log('登录')
-
+        this.$http.post('/user/login', {
+          'user_group': 'root',
+          'user': window.btoa('root'),
+          'password': window.btoa('root')
+        }).then((res) => {
+          console.log(res)
+        })
+        console.log('登录')
+  
         // console.log(this.testApi.$axios)
       }
     }
