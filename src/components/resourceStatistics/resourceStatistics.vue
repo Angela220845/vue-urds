@@ -33,92 +33,90 @@
   </div>
 </template>
 <script>
-  export default {
-    methods: {
-      getEmail() {
-        this.$http.get('/alert/get_smtp').then(res => {
-          if (res) {
-            console.log(res)
-          }
-
-        })
-      }
+export default {
+  created() {
+    this.getZone();
+  },
+  methods: {
+    getZone() {
+      this.$http.get("/api/statistics/zone_detail").then(res => {
+        console.log(res);
+      });
     }
   }
+};
 </script>
 <style lang="css" scoped>
-  .wraper > div > div {
-    border-radius: 5px;
-  }
+.wraper > div > div {
+  border-radius: 5px;
+}
 
-  .resource {
-    height: 90px;
-    background-color: white;
-    float: left;
-    padding: 15px 10px;
-    box-sizing: border-box;
-  }
-  .resource:before{
-    color: #ccc;
-    float: right;
-    font-size: 18px;
-  }
+.resource {
+  height: 90px;
+  background-color: white;
+  float: left;
+  padding: 15px 10px;
+  box-sizing: border-box;
+}
+.resource:before {
+  color: #ccc;
+  float: right;
+  font-size: 18px;
+}
 
-  .el-progress {
-    margin: 10px 0px 0px 0px;
-  }
+.el-progress {
+  margin: 10px 0px 0px 0px;
+}
 
-  .resource > span {
-    color: #666;
-    font-size: 12px;
+.resource > span {
+  color: #666;
+  font-size: 12px;
+}
 
-  }
+.server_color {
+  color: green;
+}
 
-  .server_color {
-    color: green;
-  }
+.server_color > div {
+  margin-top: 25px;
+  font-size: 18px;
+}
 
-  .server_color > div {
-    margin-top: 25px;
-    font-size: 18px;
-  }
+.cpu_color {
+  color: #de1818;
+}
 
-  .cpu_color {
-    color: #de1818;
-  }
+.disk_color {
+  color: #8e4eab;
+}
 
-  .disk_color {
-    color: #8e4eab;
-  }
+.ram_color {
+  color: #0606a9;
+}
 
-  .ram_color {
-    color: #0606a9;
-  }
+.server .resource {
+  width: 24%;
+  margin-right: 16px;
+}
 
-  .server .resource {
-    width: 24%;
-    margin-right: 16px;
-  }
+.service .resource {
+  width: 49%;
+  margin-right: 16px;
+  margin-top: 20px;
+  color: #128bb5;
+}
 
-  .service .resource {
-    width: 49%;
-    margin-right: 16px;
-    margin-top: 20px;
-    color: #128bb5;
-  }
+.service .resource > div {
+  margin-top: 20px;
+  font-size: 18px;
+}
 
-  .service .resource > div {
-    margin-top: 20px;
-    font-size: 18px;
-  }
-
-  .consumption .resource {
-    width: 99%;
-    margin-top: 20px;
-    text-align: center;
-    color: gray;
-    line-height: 56px;
-    font-size: 14px;
-
-  }
+.consumption .resource {
+  width: 99%;
+  margin-top: 20px;
+  text-align: center;
+  color: gray;
+  line-height: 56px;
+  font-size: 14px;
+}
 </style>

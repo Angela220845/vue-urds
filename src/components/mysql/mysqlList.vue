@@ -12,7 +12,7 @@
             <el-button type="primary">搜索</el-button>
             <template>
                 <el-table
-                  :data="serviceList"
+                  :data="mysqlTableData"
                   border
                   style="width: 100%">
                   <el-table-column
@@ -32,7 +32,7 @@
                     width="120">
                   </el-table-column>
                   <el-table-column
-                    prop="service_class_name"
+                    prop="service_class.service_class_name"
                     label="服务规格"
                     width="100">
                   </el-table-column>
@@ -71,6 +71,11 @@
                     label="高可用状态"
                     width="120">
                   </el-table-column>
+                    <el-table-column
+                    prop="group_name"
+                    label="用户组"
+                    width="120">
+                  </el-table-column>
                   <el-table-column
                     prop="own_user_name"
                     label="用户"
@@ -82,7 +87,7 @@
                     width="120">
                   </el-table-column>
                   <el-table-column
-                    prop="archite"
+                    prop=""
                     label="架构"
                     width="100">
                   </el-table-column>
@@ -156,98 +161,111 @@
 </template>
 
 <script>
-    import StepModal from './components/stopHighAvailability.vue'
-    
-    import {
-        serviceList,zoneList
-    } from './model/mysql_list_model.js'
-    
-    export default {
-        components: {
-            StepModal
-        },
-        created() {
-            this.serviceList = serviceList
-            this.options = zoneList.options
-            this.zoneName = zoneList.value8
-            this.keyword = zoneList.keyword
-        },
-        data() {
-            return {
-                options:[],
-                kerword:'',
-                zoneName:'',
-                serviceList: [],
-                dialogVisible: false
-    
-            }
-        },
-        methods: {
-            filterMethod() {
-                console.log('获取对应可用区主机');
-    
-            },
-            handleClick(row) {
-                console.log(row);
-                console.log(this.tableData);
-            },
-            handCommand(command) {
-                this.$confirm('确定停用数据库服务' + command + '?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.dialogVisible = true
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消'
-                    });
-                });
-            },
-            handleClose() {
-                this.dialogVisible = true
-                this.$confirm('确认关闭？')
-                    .then(_ => {
-                        done();
-                    })
-                    .catch(_ => {});
-            }
-        }
+import StepModal from "./components/stopHighAvailability.vue";
+
+export default {
+  components: {
+    StepModal
+  },
+  created() {
+    this.getMysqlTableData();
+  },
+  data() {
+    return {
+      options: [],
+      keyword: "",
+      zoneName: "",
+      serviceList: [],
+      dialogVisible: false,
+      mysqlTableData: [],
+      architeObj
+    };
+  },
+  methods: {
+    getMysqlTableData() {
+      this.$http
+        .get("/api/db_service/search", {
+          zone_id: "",
+          order_by: "create_time",
+          order: "desc",
+          key_word: "",
+          page: 1,
+          number: 20
+        })
+        .then(res => {
+          if (res.status == 200) {
+            console.log(res.data.data);
+            this.mysqlTableData = res.data.data;
+          }
+        });
+    },
+
+    filterMethod() {
+      console.log("获取对应可用区主机");
+    },
+    handleClick(row) {
+      console.log(row);
+      console.log(this.tableData);
+    },
+    handCommand(command) {
+      this.$confirm("确定停用数据库服务" + command + "?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.dialogVisible = true;
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消"
+          });
+        });
+    },
+    handleClose() {
+      this.dialogVisible = true;
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
     }
+  }
+};
 </script>
 
 <style lang="css" scoped>
-    .title {
-        padding: 10px;
-        background-color: white;
-    }
-    
-    .el-select {
-        margin-right: 20px;
-    }
-    
-    .el-input {
-        width: 217px;
-    }
-    
-    .el-button {
-        margin-left: 15px;
-    }
-    
-    .el-dropdown>span {
-        color: #409EFF;
-    }
-    
-    .el-dropdown:hover {
-        cursor: pointer;
-    }
-    
-    .el-dropdown:nth-child(1) {
-        margin-right: 15px
-    }
-    
-    .el-dialog__wrapper>.el-dialog {
-        width: 70%
-    }
+.title {
+  padding: 10px;
+  background-color: white;
+}
+
+.el-select {
+  margin-right: 20px;
+}
+
+.el-input {
+  width: 217px;
+}
+
+.el-button {
+  margin-left: 15px;
+}
+
+.el-dropdown > span {
+  color: #409eff;
+}
+
+.el-dropdown:hover {
+  cursor: pointer;
+}
+
+.el-dropdown:nth-child(1) {
+  margin-right: 15px;
+}
+
+.el-dialog__wrapper > .el-dialog {
+  width: 70%;
+}
 </style>
