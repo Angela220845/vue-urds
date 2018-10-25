@@ -3,8 +3,8 @@
         <div class="title">
     
             <span>区域：</span>
-            <el-select v-model="zoneName" filterable placeholder="请选择可用区" :filter-method="filterMethod()">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+            <el-select v-model="zoneName" filterable placeholder="请选择可用区">
+                <el-option v-for="(item,index) in zoneList" :key="index" :label="item.zone_name" :value="item.zone_name">
                 </el-option>
             </el-select>
             <span>关键字：</span>
@@ -169,16 +169,18 @@ export default {
   },
   created() {
     this.getMysqlTableData();
+    this.filterMethod()
   },
   data() {
     return {
       options: [],
       keyword: "",
-      zoneName: "",
+      zoneList: [],
       serviceList: [],
       dialogVisible: false,
       mysqlTableData: [],
-      architeObj
+      architeObj,
+      zoneName: ""
     };
   },
   methods: {
@@ -194,13 +196,18 @@ export default {
         })
         .then(res => {
           if (res.status == 200) {
-            console.log(res.data.data);
             this.mysqlTableData = res.data.data;
           }
         });
     },
 
     filterMethod() {
+      this.$http.get("/api/zone/search").then(res => {
+        console.log(res.data);
+        if (res.status == 200) {
+          this.zoneList = res.data;
+        }
+      });
       console.log("获取对应可用区主机");
     },
     handleClick(row) {
