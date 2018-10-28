@@ -1,6 +1,7 @@
 <template>
     <div>
-        <el-table
+        <div class="title">
+          <el-table
                   :data="warnData"
                   border
                   style="width: 100%">
@@ -56,6 +57,7 @@
                     width="120">
                   </el-table-column>
         </el-table>
+        </div>
     </div>
 </template>
 <script>
