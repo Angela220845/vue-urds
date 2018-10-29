@@ -110,6 +110,14 @@ export default new Router({
           }
         },
         {
+          path: '/mongodb_list/mongodb_monitor',
+          component: resolve =>
+            require(['../components/mongodb/monitor.vue'], resolve),
+          meta: {
+            title: '概览'
+          }
+        },
+        {
           path: '/data_archive',
           component: resolve =>
             require(['../components/dataArchive/dataArchive.vue'], resolve),

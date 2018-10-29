@@ -26,9 +26,6 @@
               console.log(err)
             });
           });
-        this.$router.push({
-          path: "/index"
-        })
         console.log("登录");
       }
     }
