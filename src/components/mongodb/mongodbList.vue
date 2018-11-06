@@ -4,7 +4,7 @@
 
       <span>区域：</span>
       <el-select v-model="zoneName" filterable placeholder="请选择可用区">
-        <el-option v-for="(item,index) in zoneList" :key="index" :label="item.zone_name" :value="item.zone_name">
+        <el-option v-for="(item,index) in zoneList" :key="index" :label="item.zone_name" :value="item.zone_id">
         </el-option>
       </el-select>
       <span>关键字：</span>
@@ -73,7 +73,8 @@
                       label="操作"
                       width="100">
                       <template slot-scope="scope">
-                        <el-dropdown trigger="click">
+                      <div v-if="scope.row.run_status in mongodbStopStatus">
+                         <el-dropdown trigger="click">
                           <span class="el-dropdown-link">
                             查看
                           </span>
@@ -81,21 +82,28 @@
                             <router-link :to="'/mongodb_list/mongodb_overview?service_id='+scope.row.service_id">
                               <el-dropdown-item>概览</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mysql_list/mysql_monitor?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_monitor?service_id='+scope.row.service_id">
                               <el-dropdown-item>监控</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mysql_list/mysql_report?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_report?service_id='+scope.row.service_id">
                               <el-dropdown-item>巡检报告</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mysql_list/mysql_backupset?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_backupset?service_id='+scope.row.service_id">
                               <el-dropdown-item>备份集</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mysql_list/mysql_params_change?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_params_change?service_id='+scope.row.service_id">
                               <el-dropdown-item>参数变更</el-dropdown-item>
                             </router-link>
                           </el-dropdown-menu>
                         </el-dropdown>
-                        <el-dropdown trigger="click" @command="handCommand">
+                      </div>
+                      <div v-else>
+                        <div v-if="scope.row.run_status in mongodbAbnormalRunStatus">
+                          <p>--</p>
+
+                        </div>
+                        <div v-else>
+                        <el-dropdown trigger="click" @command="handCommand" v-show="!(scope.row.run_status in mongodbStopStatus)">
                           <span class="el-dropdown-link">
                             操作
                           </span>
@@ -112,7 +120,33 @@
                             <el-dropdown-item :command="scope.row.service_id">重置用户密码</el-dropdown-item>
                           </el-dropdown-menu>
                         </el-dropdown>
-</template>
+                        <el-dropdown trigger="click">
+                          <span class="el-dropdown-link">
+                            查看
+                          </span>
+                          <el-dropdown-menu slot="dropdown">
+                            <router-link :to="'/mongodb_list/mongodb_overview?service_id='+scope.row.service_id">
+                              <el-dropdown-item>概览</el-dropdown-item>
+                            </router-link>
+                            <router-link :to="'/mongodb_list/mongodb_monitor?service_id='+scope.row.service_id">
+                              <el-dropdown-item>监控</el-dropdown-item>
+                            </router-link>
+                            <router-link :to="'/mongodb_list/mongodb_report?service_id='+scope.row.service_id">
+                              <el-dropdown-item>巡检报告</el-dropdown-item>
+                            </router-link>
+                            <router-link :to="'/mongodb_list/mongodb_backupset?service_id='+scope.row.service_id">
+                              <el-dropdown-item>备份集</el-dropdown-item>
+                            </router-link>
+                            <router-link :to="'/mongodb_list/mongodb_params_change?service_id='+scope.row.service_id">
+                              <el-dropdown-item>参数变更</el-dropdown-item>
+                            </router-link>
+                          </el-dropdown-menu>
+                        </el-dropdown>
+                        </div>
+
+                    </div>
+                  </template>
+
           </el-table-column>
         </el-table>
       </template>
@@ -147,18 +181,21 @@ export default {
     this.getMysqlTableData();
     this.filterMethod();
     this.loading = true;
+    console.log(this.instanceStatus)
   },
   data() {
     return {
       options: [],
-      keyword: "aaa",
-      zoneList: [],
+      keyword: "",
+      zoneList: [  ],
       serviceList: [],
       dialogVisible: false,
       mysqlTableData: [],
       // architeObj:{},
       zoneName: "",
-      loading: false
+      loading: false,
+      mongodbStopStatus:this.instanceStatus.mongodbStopStatus,
+      mongodbAbnormalRunStatus:this.instanceStatus.mongodbAbnormalRunStatus
     };
   },
   methods: {
@@ -166,7 +203,7 @@ export default {
       this.$http
         .get("/api/mongodb/search", {
           params: {
-            zone_id: "",
+            zone_id: this.zoneName,
             order_by: "create_time",
             order: "desc",
             key_word: this.keyword,
@@ -183,12 +220,14 @@ export default {
     },
     filterMethod() {
       this.$http.get("/api/zone/search").then(res => {
-        console.log(res.data);
         if (res.status == 200) {
+         this.zoneList =  res.data.unshift({
+          zone_id:'',
+          zone_name:'全部'
+          })
           this.zoneList = res.data;
         }
       });
-      console.log("获取对应可用区主机");
     },
     handleClick(row) {
       console.log(row);

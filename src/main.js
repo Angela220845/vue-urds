@@ -9,8 +9,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
 import '../static/css/reset.css'
 import './assets/fonts/iconfont.css';
+import {Status} from './instanceStatus';
 // import echarts from 'echarts'
-
 // Vue.prototype.$echarts = echarts
 Vue.prototype.$http = axios.create({
   headers: {
@@ -22,6 +22,7 @@ Vue.prototype.$http = axios.create({
     return data
   }]
 });
+Vue.prototype.instanceStatus = new Status();
 Vue.config.productionTip = false
 // ***element ui 开始
 Vue.use(ElementUI);
