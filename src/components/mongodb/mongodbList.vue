@@ -50,7 +50,9 @@
                     <el-table-column
                       prop="run_status"
                       label="运行状态"
-                      width="120">
+                      width="120"
+                      :formatter="formatRunStatus"
+                      >
                     </el-table-column>
                       <el-table-column
                       prop="group_name"
@@ -231,9 +233,48 @@ export default {
       });
     },
     formatArchite(row, column) {
-      console.log(row[column.property]);
-      let archite = row[column.property] == true?"三实例集群":'单实例'
+      let archite = row[column.property] == true ? "三实例集群" : "单实例";
       return archite;
+    },
+    formatRunStatus(row,column) {
+      let runStatus = row[column.property],text,cls;
+      switch (runStatus) {
+        case "FAILED":
+          text = "审批失败";
+          cls = "fail";
+          break;
+        case "APPROVALING":
+          text = "等待审批……";
+          cls = "cur";
+          break;
+        case "REFUSED":
+          text = "审批已拒绝";
+          cls = "fail";
+          break;
+        case "DESTROYED":
+          text = "已销毁";
+          cls = "destroy";
+          break;
+        case "STATUS_MONGODB_HEALTH_OK":
+          text = "运行";
+          cls = "run_status run_success";
+          break;
+        case "STATUS_MONGODB_HEALTH_BAD":
+          text = "停止";
+          cls = "run_status run_error";
+          break;
+        case "UNKOWN":
+        case "STATUS_MONGODB_MGR_BAD":
+        case "STATUS_MONGODB_SECONDARY_BAD":
+          text = "异常";
+          cls = "run_status run_abnormal";
+          break;
+        case "STATUS_UNKNOWN":
+          text = "未知状态";
+          cls = "info";
+          break;
+      }
+      return text;
     },
     handleClick(row) {
       console.log(row);
