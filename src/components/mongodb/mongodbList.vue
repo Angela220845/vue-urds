@@ -14,7 +14,8 @@
                   <el-table
                     :data="mysqlTableData"
                     border
-                    style="width: 100%">
+                    style="width: 100%"
+                    v-loading="loading">
                     <el-table-column
                       fixedID
                       prop="service_id"
@@ -145,6 +146,7 @@
     created() {
       this.getMysqlTableData();
       this.filterMethod()
+      this.loading =true
     },
     data() {
       return {
@@ -156,6 +158,7 @@
         mysqlTableData: [],
         // architeObj:{},
         // zoneName: ""
+        loading:false
       };
     },
     methods: {
@@ -172,10 +175,10 @@
           .then(res => {
             if (res.status == 200) {
               this.mysqlTableData = res.data.data;
+              this.loading = false;
             }
           });
       },
-  
       filterMethod() {
         this.$http.get("/api/zone/search").then(res => {
           console.log(res.data);
