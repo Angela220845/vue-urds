@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="title">
-  
+
       <span>区域：</span>
-      <!-- <el-select v-model="zoneName" filterable placeholder="请选择可用区">
+      <el-select v-model="zoneName" filterable placeholder="请选择可用区">
         <el-option v-for="(item,index) in zoneList" :key="index" :label="item.zone_name" :value="item.zone_name">
         </el-option>
-      </el-select> -->
+      </el-select>
       <span>关键字：</span>
-      <!-- <el-input v-model="keyword" class="el-input" placeholder="请输入关键词"></el-input> -->
-      <el-button type="primary">搜索</el-button>
+      <el-input v-model="keyword" class="el-input" placeholder="请输入关键词"></el-input>
+      <el-button type="primary" @click="getMysqlTableData()">搜索</el-button>
       <template>
                   <el-table
                     :data="mysqlTableData"
@@ -67,7 +67,7 @@
                       label="架构"
                       width="100">
                     </el-table-column>
-                                  
+
                     <el-table-column
                       fixed="right"
                       label="操作"
@@ -125,7 +125,7 @@
   <step-modal>
   </step-modal>
 </template> -->
-  
+
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -138,119 +138,124 @@
 
 <script>
 //   import StepModal from "./components/stopHighAvailability.vue";
-  
-  export default {
-    components: {
+
+export default {
+  components: {
     //   StepModal
-    },
-    created() {
-      this.getMysqlTableData();
-      this.filterMethod()
-      this.loading =true
-    },
-    data() {
-      return {
-        options: [],
-        keyword: "aaa",
-        // zoneList: [],
-        serviceList: [],
-        dialogVisible: false,
-        mysqlTableData: [],
-        // architeObj:{},
-        // zoneName: ""
-        loading:false
-      };
-    },
-    methods: {
-      getMysqlTableData() {
-        this.$http
-          .get("/api/mongodb/search", {
+  },
+  created() {
+    this.getMysqlTableData();
+    this.filterMethod();
+    this.loading = true;
+  },
+  data() {
+    return {
+      options: [],
+      keyword: "aaa",
+      zoneList: [],
+      serviceList: [],
+      dialogVisible: false,
+      mysqlTableData: [],
+      // architeObj:{},
+      zoneName: "",
+      loading: false
+    };
+  },
+  methods: {
+    getMysqlTableData() {
+      this.$http
+        .get("/api/mongodb/search", {
+          params: {
             zone_id: "",
             order_by: "create_time",
             order: "desc",
-            key_word: "",
+            key_word: this.keyword,
             page: 1,
             number: 20
-          })
-          .then(res => {
-            if (res.status == 200) {
-              this.mysqlTableData = res.data.data;
-              this.loading = false;
-            }
-          });
-      },
-      filterMethod() {
-        this.$http.get("/api/zone/search").then(res => {
-          console.log(res.data);
+          }
+        })
+        .then(res => {
           if (res.status == 200) {
-            // this.zoneList = res.data;
+            this.mysqlTableData = res.data.data;
+            this.loading = false;
           }
         });
-        console.log("获取对应可用区主机");
-      },
-      handleClick(row) {
-        console.log(row);
-        console.log(this.tableData);
-      },
-      handCommand(command) {
-        this.$confirm("确定停用数据库服务" + command + "?", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-          })
-          .then(() => {
-            this.dialogVisible = true;
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消"
-            });
+    },
+    filterMethod() {
+      this.$http.get("/api/zone/search").then(res => {
+        console.log(res.data);
+        if (res.status == 200) {
+          this.zoneList = res.data;
+        }
+      });
+      console.log("获取对应可用区主机");
+    },
+    handleClick(row) {
+      console.log(row);
+      console.log(this.tableData);
+    },
+    handCommand(command) {
+      this.$confirm("确定停用数据库服务" + command + "?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.dialogVisible = true;
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消"
           });
-      },
-      handleClose() {
-        this.dialogVisible = true;
-        this.$confirm("确认关闭？")
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      }
+        });
+    },
+    handleClose() {
+      this.dialogVisible = true;
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
     }
-  };
+  }
+};
 </script>
 
 <style lang="css" scoped>
-  .title {
-    padding-left: 230px;
-    background-color: white;
-  }
-  
-  .el-select {
-    margin-right: 20px;
-  }
-  
-  .el-input {
-    width: 217px;
-  }
-  
-  .el-button {
-    margin-left: 15px;
-  }
-  
-  .el-dropdown>span {
-    color: #409eff;
-  }
-  
-  .el-dropdown:hover {
-    cursor: pointer;
-  }
-  
-  .el-dropdown:nth-child(1) {
-    margin-right: 15px;
-  }
-  
-  .el-dialog__wrapper>.el-dialog {
-    width: 70%;
-  }
+.title {
+  padding-left: 230px;
+  background-color: white;
+}
+
+.el-select {
+  margin-right: 20px;
+}
+
+.el-input {
+  width: 217px;
+}
+
+.el-button {
+  margin-left: 15px;
+}
+
+.el-dropdown > span {
+  color: #409eff;
+}
+
+.el-dropdown:hover {
+  cursor: pointer;
+}
+
+.el-dropdown:nth-child(1) {
+  margin-right: 15px;
+}
+
+.el-dialog__wrapper > .el-dialog {
+  width: 70%;
+}
+.el-table.el-table--fit.el-table--border.el-table--scrollable-x.el-table--enable-row-transition {
+  margin-top: 20px;
+}
 </style>
