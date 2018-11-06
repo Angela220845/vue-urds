@@ -63,11 +63,12 @@
                       width="120">
                     </el-table-column>
                     <el-table-column
-                      prop=""
+                      prop="is_cluster_enable"
                       label="架构"
-                      width="100">
+                      width="100"
+                      :formatter="formatArchite"
+                      >
                     </el-table-column>
-
                     <el-table-column
                       fixed="right"
                       label="操作"
@@ -181,21 +182,21 @@ export default {
     this.getMysqlTableData();
     this.filterMethod();
     this.loading = true;
-    console.log(this.instanceStatus)
+    console.log(this.instanceStatus);
   },
   data() {
     return {
       options: [],
       keyword: "",
-      zoneList: [  ],
+      zoneList: [],
       serviceList: [],
       dialogVisible: false,
       mysqlTableData: [],
       // architeObj:{},
       zoneName: "",
       loading: false,
-      mongodbStopStatus:this.instanceStatus.mongodbStopStatus,
-      mongodbAbnormalRunStatus:this.instanceStatus.mongodbAbnormalRunStatus
+      mongodbStopStatus: this.instanceStatus.mongodbStopStatus,
+      mongodbAbnormalRunStatus: this.instanceStatus.mongodbAbnormalRunStatus
     };
   },
   methods: {
@@ -221,13 +222,18 @@ export default {
     filterMethod() {
       this.$http.get("/api/zone/search").then(res => {
         if (res.status == 200) {
-         this.zoneList =  res.data.unshift({
-          zone_id:'',
-          zone_name:'全部'
-          })
+          this.zoneList = res.data.unshift({
+            zone_id: "",
+            zone_name: "全部"
+          });
           this.zoneList = res.data;
         }
       });
+    },
+    formatArchite(row, column) {
+      console.log(row[column.property]);
+      let archite = row[column.property] == true?"三实例集群":'单实例'
+      return archite;
     },
     handleClick(row) {
       console.log(row);
