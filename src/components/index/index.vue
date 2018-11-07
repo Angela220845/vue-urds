@@ -5,10 +5,10 @@
         <div class="grid-content bg-purple-dark"></div>
       </el-col>
     </el-row>
-  
+
     <div class="aside_nav">
       <!-- <el-row class="tac"> -->
-  
+
       <el-col :span="12">
         <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
           <router-link to="/resource_statistics">
@@ -67,12 +67,12 @@
           </router-link>
         </el-menu>
       </el-col>
-  
-  
+
+
       <!-- </el-row> -->
     </div>
     <router-view></router-view>
-  
+
   </div>
 </template>
 
@@ -96,48 +96,48 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   .bg-purple-dark {
     height: 40px;
     background-color: #5c678a;
   }
-  
+
   * {
     margin: 0;
     padding: 0;
   }
-  
+
   body {
     position: relative;
     background-color: lightgray;
   }
-  
+
   .el-col-12 {
     width: 201px;
   }
-  
+
   .aside_nav>div:nth-child(2) {
     margin-left: 201px;
     padding: 10px;
   }
-  
+
   .el-menu {
     border: none;
   }
-  
+
   .el-menu-item,
   .el-submenu__title {
     height: 104px;
     line-height: 104px;
   }
-  
+
   .el-menu-item span {
     margin-left: 5px;
   }
-  
-  
+
+
   /* 更改样式 */
-  
+
   .aside_nav ul {
     background-color: #e9ebe3;
     border-right: 5px solid #ccc;
