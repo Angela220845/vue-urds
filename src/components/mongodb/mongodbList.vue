@@ -9,10 +9,10 @@
       </el-select>
       <span>关键字：</span>
       <el-input v-model="keyword" class="el-input" placeholder="请输入关键词"></el-input>
-      <el-button type="primary" @click="getMysqlTableData()">搜索</el-button>
+      <el-button type="primary" @click="getMongodbTableData()">搜索</el-button>
       <template>
                   <el-table
-                    :data="mysqlTableData"
+                    :data="mongodbTableData"
                     border
                     style="width: 100%"
                     v-loading="loading">
@@ -30,7 +30,9 @@
                     <el-table-column
                       prop="group_id"
                       label="实例组ID"
-                      width="120">
+                      width="120"
+                      :formatter="formatGroupId"
+                      >
                     </el-table-column>
                     <el-table-column
                       prop="service_class.service_class_name"
@@ -51,8 +53,33 @@
                       prop="run_status"
                       label="运行状态"
                       width="120"
-                      :formatter="formatRunStatus"
                       >
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.run_status === 'FAILED'">
+                        <span class="run_status fail"><span>审批失败</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'APPROVALING'">
+                        <span class="run_status cur"><span>等待审批……</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'REFUSED'">
+                        <span class="run_status fail"><span>审批已拒绝</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'DESTROYED'">
+                        <span class="run_status destroy"><span>已销毁</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'STATUS_MONGODB_HEALTH_OK'">
+                        <span class="run_status run_success"><span>运行</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'STATUS_MONGODB_HEALTH_BAD'">
+                        <span class="run_status run_error"><span>停止</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'UNKOWN'||scope.row.run_status==='STATUS_MONGODB_MGR_BAD'||scope.row.run_status==='STATUS_MONGODB_SECONDARY_BAD'">
+                        <span class="run_status run_abnormal"><span>异常</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'STATUS_UNKNOWN'">
+                        <span class="run_status uknow"><span>未知状态</span></span>
+                        </div>
+                      </template>
                     </el-table-column>
                       <el-table-column
                       prop="group_name"
@@ -181,7 +208,7 @@ export default {
     //   StepModal
   },
   created() {
-    this.getMysqlTableData();
+    this.getMongodbTableData();
     this.filterMethod();
     this.loading = true;
     console.log(this.instanceStatus);
@@ -193,16 +220,17 @@ export default {
       zoneList: [],
       serviceList: [],
       dialogVisible: false,
-      mysqlTableData: [],
+      mongodbTableData: [],
       // architeObj:{},
       zoneName: "",
       loading: false,
       mongodbStopStatus: this.instanceStatus.mongodbStopStatus,
-      mongodbAbnormalRunStatus: this.instanceStatus.mongodbAbnormalRunStatus
+      mongodbAbnormalRunStatus: this.instanceStatus.mongodbAbnormalRunStatus,
+      destoryStatus: this.instanceStatus.destroyStatus
     };
   },
   methods: {
-    getMysqlTableData() {
+    getMongodbTableData() {
       this.$http
         .get("/api/mongodb/search", {
           params: {
@@ -216,7 +244,7 @@ export default {
         })
         .then(res => {
           if (res.status == 200) {
-            this.mysqlTableData = res.data.data;
+            this.mongodbTableData = res.data.data;
             this.loading = false;
           }
         });
@@ -236,45 +264,10 @@ export default {
       let archite = row[column.property] == true ? "三实例集群" : "单实例";
       return archite;
     },
-    formatRunStatus(row,column) {
-      let runStatus = row[column.property],text,cls;
-      switch (runStatus) {
-        case "FAILED":
-          text = "审批失败";
-          cls = "fail";
-          break;
-        case "APPROVALING":
-          text = "等待审批……";
-          cls = "cur";
-          break;
-        case "REFUSED":
-          text = "审批已拒绝";
-          cls = "fail";
-          break;
-        case "DESTROYED":
-          text = "已销毁";
-          cls = "destroy";
-          break;
-        case "STATUS_MONGODB_HEALTH_OK":
-          text = "运行";
-          cls = "run_status run_success";
-          break;
-        case "STATUS_MONGODB_HEALTH_BAD":
-          text = "停止";
-          cls = "run_status run_error";
-          break;
-        case "UNKOWN":
-        case "STATUS_MONGODB_MGR_BAD":
-        case "STATUS_MONGODB_SECONDARY_BAD":
-          text = "异常";
-          cls = "run_status run_abnormal";
-          break;
-        case "STATUS_UNKNOWN":
-          text = "未知状态";
-          cls = "info";
-          break;
-      }
-      return text;
+    formatGroupId(row, column) {
+      let groupId =
+        row.run_status in this.destoryStatus ? "--" : row[column.property];
+      return groupId;
     },
     handleClick(row) {
       console.log(row);
@@ -312,6 +305,7 @@ export default {
 .title {
   padding-left: 230px;
   background-color: white;
+  padding-top: 20px;
 }
 
 .el-select {
@@ -343,5 +337,58 @@ export default {
 }
 .el-table.el-table--fit.el-table--border.el-table--scrollable-x.el-table--enable-row-transition {
   margin-top: 20px;
+}
+span.fail {
+  color: #ec6d6d;
+  background-color: #fadede;
+  display: block;
+}
+span.cur {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  display: block;
+}
+span.destroy {
+  background-color: #ccc;
+  display: block;
+}
+span.run_status > span {
+  margin-left: 10px;
+}
+span.run_success {
+  color: #26922b;
+}
+
+span.run_error {
+  color: #ff5200;
+}
+span.run_error::before {
+  background-color: red;
+  display: inline-block;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  content: "";
+  -webkit-box-shadow: 2px 2px 6px #c7b852;
+  -moz-box-shadow: 2px 2px 6px #c7b852;
+  -ms-box-shadow: 2px 2px 6px #c7b852;
+  -o-box-shadow: 2px 2px 6px #c7b852;
+  box-shadow: 2px 2px 6px #c7b852;
+}
+span.run_abnormal {
+  color: #d0bd50;
+}
+span.run_abnormal::before {
+  background-color: #f1d82f;
+  display: inline-block;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  content: "";
+  -webkit-box-shadow: 2px 2px 6px #c7b852;
+  -moz-box-shadow: 2px 2px 6px #c7b852;
+  -ms-box-shadow: 2px 2px 6px #c7b852;
+  -o-box-shadow: 2px 2px 6px #c7b852;
+  box-shadow: 2px 2px 6px #c7b852;
 }
 </style>
