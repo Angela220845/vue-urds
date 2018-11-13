@@ -1,11 +1,36 @@
 import axios from 'axios';
 export class Axios {
+  static isArray(o) {
+    return Object.prototype.toString.call(o) == '[object Array]';
+  }
   static get(url, data = {}) {
     return new Promise((resolve, reject) => {
       axios
-        .get(url, { params: data })
+        .get('/api' + url, {
+          params: data
+        })
         .then(res => {
-          resolve(res);
+          if (res.status == 200) {
+            if (this.isArray(res.data)) {
+              console.log(1)
+              resolve(res.data);
+
+            } else {
+              if (res.data.data == null) {
+                console.log(3)
+                res.data.data = []
+                resolve(res.data.data)
+
+              } else if (res.data.data != undefined) {
+                // resolve(res.data)
+                if (this.isArray(res.data.data)) {
+                  console.log(4)
+                  resolve(res.data.data);
+                }
+              }
+
+            }
+          }
         })
         .catch(error => {
           reject(error);

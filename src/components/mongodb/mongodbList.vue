@@ -201,6 +201,7 @@
 </template>
 
 <script>
+import { Axios } from "../../common/base/Axios";
 //   import StepModal from "./components/stopHighAvailability.vue";
 
 export default {
@@ -209,7 +210,7 @@ export default {
   },
   created() {
     this.getMongodbTableData();
-    this.filterMethod();
+    this.getZoneList();
     this.loading = true;
     console.log(this.instanceStatus);
   },
@@ -231,34 +232,38 @@ export default {
   },
   methods: {
     getMongodbTableData() {
-      this.$http
-        .get("/api/mongodb/search", {
-          params: {
-            zone_id: this.zoneName,
-            order_by: "create_time",
-            order: "desc",
-            key_word: this.keyword,
-            page: 1,
-            number: 20
-          }
-        })
+      Axios.get("/mongodb/search", {
+        zone_id: this.zoneName,
+        order_by: "create_time",
+        order: "desc",
+        key_word: this.keyword,
+        page: 1,
+        number: 20
+      })
         .then(res => {
-          if (res.status == 200) {
-            this.mongodbTableData = res.data.data;
-            this.loading = false;
+          this.mongodbTableData = res;
+          this.loading = false;
+        })
+        .then(error => {
+          if (error) {
+            console.log(error);
           }
         });
     },
-    filterMethod() {
-      this.$http.get("/api/zone/search").then(res => {
-        if (res.status == 200) {
-          this.zoneList = res.data.unshift({
+    getZoneList() {
+      Axios.get("/zone/search")
+        .then(res => {
+          this.zoneList = res.unshift({
             zone_id: "",
             zone_name: "全部"
           });
-          this.zoneList = res.data;
-        }
-      });
+          this.zoneList = res;
+        })
+        .then(error => {
+          if (error) {
+            console.log(error);
+          }
+        });
     },
     formatArchite(row, column) {
       let archite = row[column.property] == true ? "三实例集群" : "单实例";
