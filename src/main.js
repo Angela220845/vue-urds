@@ -13,7 +13,7 @@ import {Status} from './instanceStatus';
 // import echarts from 'echarts'
 // Vue.prototype.$echarts = echarts
 import { Axios } from "./common/base/Axios";
-
+import store from './store/index'
 Vue.prototype.$http = axios.create({
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -104,6 +104,7 @@ Vue.filter('handleArchite', function (architeObj) {
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

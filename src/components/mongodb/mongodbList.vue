@@ -257,6 +257,8 @@ export default {
             zone_name: "全部"
           });
           this.zoneList = res;
+          this.$store.state.zoneList = this.zoneList
+          this.$store.commit('saveZone');
         })
         .then(error => {
           if (error) {
