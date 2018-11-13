@@ -201,7 +201,6 @@
 </template>
 
 <script>
-import { Axios } from "../../common/base/Axios";
 //   import StepModal from "./components/stopHighAvailability.vue";
 
 export default {
@@ -232,7 +231,7 @@ export default {
   },
   methods: {
     getMongodbTableData() {
-      Axios.get("/mongodb/search", {
+      this.axiosApi.get("/mongodb/search", {
         zone_id: this.zoneName,
         order_by: "create_time",
         order: "desc",
@@ -251,7 +250,7 @@ export default {
         });
     },
     getZoneList() {
-      Axios.get("/zone/search")
+      this.axiosApi.get("/zone/search")
         .then(res => {
           this.zoneList = res.unshift({
             zone_id: "",

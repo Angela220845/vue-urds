@@ -12,6 +12,8 @@ import './assets/fonts/iconfont.css';
 import {Status} from './instanceStatus';
 // import echarts from 'echarts'
 // Vue.prototype.$echarts = echarts
+import { Axios } from "./common/base/Axios";
+
 Vue.prototype.$http = axios.create({
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -23,6 +25,7 @@ Vue.prototype.$http = axios.create({
   }]
 });
 Vue.prototype.instanceStatus = new Status();
+Vue.prototype.axiosApi = new Axios()
 Vue.config.productionTip = false
 // ***element ui 开始
 Vue.use(ElementUI);

@@ -1,9 +1,9 @@
 import axios from 'axios';
 export class Axios {
-  static isArray(o) {
+   isArray(o) {
     return Object.prototype.toString.call(o) == '[object Array]';
   }
-  static get(url, data = {}) {
+   get(url, data = {}) {
     return new Promise((resolve, reject) => {
       axios
         .get('/api' + url, {
@@ -37,7 +37,7 @@ export class Axios {
         });
     });
   }
-  static post(url, params = {}) {
+   post(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
         .post(url, params)
@@ -49,7 +49,7 @@ export class Axios {
         });
     });
   }
-  static delete(url, params = {}) {
+   delete(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
         .delete(url, params)
@@ -61,7 +61,7 @@ export class Axios {
         });
     });
   }
-  static put(url, params = {}) {
+   put(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
         .put(url, params)
@@ -73,7 +73,7 @@ export class Axios {
         });
     });
   }
-  static allPost(params) {
+   allPost(params) {
     return new Promise((resolve, reject) => {
       axios
         .all(params)
@@ -87,13 +87,13 @@ export class Axios {
         });
     });
   }
-  static all(params) {
+   all(params) {
     return axios.all(params);
   }
-  static spread(fun) {
+   spread(fun) {
     return axios.spread(fun);
   }
-  static config(config) {
+   config(config) {
     return axios(config);
   }
 }
