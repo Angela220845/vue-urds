@@ -12,9 +12,10 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://10.186.30.166:25715', // urds
+        // target: 'http://10.186.30.166:25715', // urds
         // target: 'http://10.186.18.126:5715', // 测试urds
         // target: 'http://10.186.30.166:25799', // umc
+        target:'http://10.186.30.17:5715/', //产品urds
         // secure: false,  // 如果是https接口，需要配置这个参数
         changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
         pathRewrite: {
