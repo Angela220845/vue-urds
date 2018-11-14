@@ -3,16 +3,24 @@ import Vuex from 'vuex'
 import {
   Axios
 } from "../common/base/Axios";
+import {
+  init
+} from 'echarts';
 
 Vue.use(Vuex)
 let axiosApi = new Axios()
+
 export default new Vuex.Store({
   state: {
-    zoneList: []
+    zoneList: [],
+    userList: []
   },
   mutations: {
     initZoneList(state, payload) {
       state.zoneList = payload
+    },
+    initUserList(state, payload) {
+      state.userList = payload
     }
 
   },
@@ -34,6 +42,18 @@ export default new Vuex.Store({
           .catch(error => {
             reject(error)
           });
+      })
+    },
+    getUserList({
+      commit
+    }) {
+      return new Promise((resolve, reject) => {
+        axiosApi.get('support/user_list').then(res => {
+          commit('initUserList', res)
+          resolve(res)
+        }).catch(error => {
+          reject(error)
+        })
       })
     }
   }

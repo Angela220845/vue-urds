@@ -9,6 +9,8 @@ export default {
   name: "App",
   created() {
     this.$store.dispatch("getZoneList");
+    this.$store.dispatch("getUserList");
+
   },
   methods: {
     handleOpen(key, keyPath) {

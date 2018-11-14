@@ -210,6 +210,9 @@ export default {
   computed: {
     zoneList() {
       return this.$store.state.zoneList;
+    },
+    userList() {
+      return this.$store.state.userList;
     }
   },
   created() {
