@@ -207,9 +207,13 @@ export default {
   components: {
     //   StepModal
   },
+  computed: {
+    zoneList() {
+      return this.$store.state.zoneList;
+    }
+  },
   created() {
     this.getMongodbTableData();
-    this.getZoneList();
     this.loading = true;
     console.log(this.instanceStatus);
   },
@@ -217,7 +221,6 @@ export default {
     return {
       options: [],
       keyword: "",
-      zoneList: [],
       serviceList: [],
       dialogVisible: false,
       mongodbTableData: [],
@@ -231,34 +234,18 @@ export default {
   },
   methods: {
     getMongodbTableData() {
-      this.axiosApi.get("/mongodb/search", {
-        zone_id: this.zoneName,
-        order_by: "create_time",
-        order: "desc",
-        key_word: this.keyword,
-        page: 1,
-        number: 20
-      })
+      this.axiosApi
+        .get("/mongodb/search", {
+          zone_id: this.zoneName,
+          order_by: "create_time",
+          order: "desc",
+          key_word: this.keyword,
+          page: 1,
+          number: 20
+        })
         .then(res => {
           this.mongodbTableData = res;
           this.loading = false;
-        })
-        .then(error => {
-          if (error) {
-            console.log(error);
-          }
-        });
-    },
-    getZoneList() {
-      this.axiosApi.get("/zone/search")
-        .then(res => {
-          this.zoneList = res.unshift({
-            zone_id: "",
-            zone_name: "全部"
-          });
-          this.zoneList = res;
-          this.$store.state.zoneList = this.zoneList
-          this.$store.commit('saveZone');
         })
         .then(error => {
           if (error) {
