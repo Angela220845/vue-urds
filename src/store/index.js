@@ -3,10 +3,6 @@ import Vuex from 'vuex'
 import {
   Axios
 } from "../common/base/Axios";
-import {
-  init
-} from 'echarts';
-
 Vue.use(Vuex)
 let axiosApi = new Axios()
 

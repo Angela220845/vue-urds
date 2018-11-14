@@ -2,7 +2,7 @@
   <div id="app">
     <el-row>
       <el-col :span="24">
-        <div class="grid-content bg-purple-dark"></div>
+        <div class="grid-content bg-purple-dark"><span class="icon iconfont icon-yonghu"></span></div>
       </el-col>
     </el-row>
 
@@ -101,7 +101,14 @@
     height: 40px;
     background-color: #5c678a;
   }
-
+  .bg-purple-dark span{
+    height: 40px;
+    width: 50px;
+    cursor: pointer;
+    line-height: 40px;
+    color: white;
+    text-align: center;
+  }
   * {
     margin: 0;
     padding: 0;
