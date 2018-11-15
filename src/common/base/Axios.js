@@ -1,9 +1,12 @@
 import axios from 'axios';
 export class Axios {
-   isArray(o) {
+  isArray(o) {
     return Object.prototype.toString.call(o) == '[object Array]';
   }
-   get(url, data = {}) {
+  isObject(o) {
+    return (typeof o == 'object') && (typeof o.length != 'number')
+  }
+  get(url, data = {}) {
     return new Promise((resolve, reject) => {
       axios
         .get('/api' + url, {
@@ -16,7 +19,13 @@ export class Axios {
               resolve(res.data);
 
             } else {
-              if (res.data.data == null) {
+              if (this.isObject(res.data)) {
+                console.log('对象')
+                if(this.isArray(res.data.data)){
+                  resolve(res.data.data)
+                }
+                resolve(res.data)
+              } else if (res.data.data == null) {
                 console.log(3)
                 res.data.data = []
                 resolve(res.data.data)
@@ -30,6 +39,8 @@ export class Axios {
               }
 
             }
+
+
           }
         })
         .catch(error => {
@@ -37,7 +48,7 @@ export class Axios {
         });
     });
   }
-   post(url, params = {}) {
+  post(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
         .post(url, params)
@@ -49,7 +60,7 @@ export class Axios {
         });
     });
   }
-   delete(url, params = {}) {
+  delete(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
         .delete(url, params)
@@ -61,7 +72,7 @@ export class Axios {
         });
     });
   }
-   put(url, params = {}) {
+  put(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
         .put(url, params)
@@ -73,7 +84,7 @@ export class Axios {
         });
     });
   }
-   allPost(params) {
+  allPost(params) {
     return new Promise((resolve, reject) => {
       axios
         .all(params)
@@ -87,13 +98,13 @@ export class Axios {
         });
     });
   }
-   all(params) {
+  all(params) {
     return axios.all(params);
   }
-   spread(fun) {
+  spread(fun) {
     return axios.spread(fun);
   }
-   config(config) {
+  config(config) {
     return axios(config);
   }
 }

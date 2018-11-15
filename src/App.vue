@@ -10,7 +10,7 @@ export default {
   created() {
     this.$store.dispatch("getZoneList");
     this.$store.dispatch("getUserList");
-
+    this.$store.dispatch("getLoginAccount")
   },
   methods: {
     handleOpen(key, keyPath) {

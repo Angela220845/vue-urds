@@ -140,6 +140,7 @@ export default {
 .bg-purple-dark {
   height: 40px;
   background-color: #5c678a;
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
 }
 * {
   margin: 0;

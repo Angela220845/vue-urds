@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title">
-  
+
       <span>区域：</span>
       <el-select v-model="zoneName" filterable placeholder="请选择可用区">
         <el-option v-for="(item,index) in zoneList" :key="index" :label="item.zone_name" :value="item.zone_name">
@@ -14,7 +14,9 @@
                   <el-table
                     :data="mysqlTableData"
                     border
-                    style="width: 100%">
+                    style="width: 100%"
+                    v-loading="loading"
+                    >
                     <el-table-column
                       fixedID
                       prop="service_id"
@@ -24,7 +26,7 @@
                     <el-table-column
                       prop="db_service_name"
                       label="服务名称"
-                      width="120">`
+                      width="120">
                     </el-table-column>
                     <el-table-column
                       prop="mysql_group_id"
@@ -32,9 +34,11 @@
                       width="120">
                     </el-table-column>
                     <el-table-column
-                      prop="service_class.service_class_name"
+                      prop="service_class"
                       label="服务规格"
-                      width="100">
+                      width="100"
+                      :formatter="formatClass"
+                      >
                     </el-table-column>
                     <el-table-column
                       prop="create_time"
@@ -42,7 +46,7 @@
                       width="150">
                     </el-table-column>
                     <el-table-column
-                      prop="monitor"
+                      prop="create_time"
                       label="监控"
                       width="70">
                     </el-table-column>
@@ -87,11 +91,13 @@
                       width="120">
                     </el-table-column>
                     <el-table-column
-                      prop=""
+                      prop="archite"
                       label="架构"
-                      width="100">
+                      width="100"
+                      :formatter="formatArchite"
+                      >
                     </el-table-column>
-                                  
+
                     <el-table-column
                       fixed="right"
                       label="操作"
@@ -149,7 +155,7 @@
   <step-modal>
   </step-modal>
 </template>
-  
+
   <span>这是一段信息</span>
   <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -161,118 +167,114 @@
 </template>
 
 <script>
-  import StepModal from "./components/stopHighAvailability.vue";
-  
-  export default {
-    components: {
-      StepModal
-    },
-    created() {
-      this.getMysqlTableData();
-      this.filterMethod()
-    },
-    data() {
-      return {
-        options: [],
-        keyword: "",
-        zoneList: [],
-        serviceList: [],
-        dialogVisible: false,
-        mysqlTableData: [],
-        architeObj,
-        zoneName: ""
-      };
-    },
-    methods: {
-      getMysqlTableData() {
-        this.$http
-          .get("/api/db_service/search", {
-            zone_id: "",
-            order_by: "create_time",
-            order: "desc",
-            key_word: "",
-            page: 1,
-            number: 20
-          })
-          .then(res => {
-            if (res.status == 200) {
-              this.mysqlTableData = res.data.data;
-            }
-          });
-      },
-  
-      filterMethod() {
-        this.$http.get("/api/zone/search").then(res => {
-          console.log(res.data);
-          if (res.status == 200) {
-            this.zoneList = res.data;
-          }
+import StepModal from "./components/stopHighAvailability.vue";
+
+export default {
+  components: {
+    StepModal
+  },
+  created() {
+    this.getMysqlTableData();
+    this.loading = true
+  },
+  data() {
+    return {
+      options: [],
+      keyword: "",
+      zoneList: [],
+      serviceList: [],
+      dialogVisible: false,
+      mysqlTableData: [],
+      zoneName: "",
+      loading:false
+    };
+  },
+  methods: {
+    getMysqlTableData() {
+      this.axiosApi
+        .get("/db_service/search", {
+          zone_id: "",
+          order_by: "create_time",
+          order: "desc",
+          key_word: "",
+          page: 1,
+          number: 20
+        })
+        .then(res => {
+          console.log(res);
+          this.mysqlTableData = res
+          this.loading = false;
         });
-        console.log("获取对应可用区主机");
-      },
-      handleClick(row) {
-        console.log(row);
-        console.log(this.tableData);
-      },
-      handCommand(command) {
-        this.$confirm("确定停用数据库服务" + command + "?", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-          })
-          .then(() => {
-            this.dialogVisible = true;
-          })
-          .catch(() => {
-            this.$message({
-              type: "info",
-              message: "已取消"
-            });
+    },
+    formatClass (row,column){
+      return row.service_class.service_class_name
+    },
+    formatArchite(row,column){
+      return row.service_class.service_class_name
+    },
+    handleClick(row) {
+      console.log(row);
+      console.log(this.tableData);
+    },
+    handCommand(command) {
+      this.$confirm("确定停用数据库服务" + command + "?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.dialogVisible = true;
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消"
           });
-      },
-      handleClose() {
-        this.dialogVisible = true;
-        this.$confirm("确认关闭？")
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      }
+        });
+    },
+    handleClose() {
+      this.dialogVisible = true;
+      this.$confirm("确认关闭？")
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {});
     }
-  };
+  }
+};
 </script>
 
 <style lang="css" scoped>
-  .title {
-    padding-left: 230px;
-    background-color: white;
-  }
-  
-  .el-select {
-    margin-right: 20px;
-  }
-  
-  .el-input {
-    width: 217px;
-  }
-  
-  .el-button {
-    margin-left: 15px;
-  }
-  
-  .el-dropdown>span {
-    color: #409eff;
-  }
-  
-  .el-dropdown:hover {
-    cursor: pointer;
-  }
-  
-  .el-dropdown:nth-child(1) {
-    margin-right: 15px;
-  }
-  
-  .el-dialog__wrapper>.el-dialog {
-    width: 70%;
-  }
+.title {
+  padding-left: 230px;
+  background-color: white;
+}
+
+.el-select {
+  margin-right: 20px;
+}
+
+.el-input {
+  width: 217px;
+}
+
+.el-button {
+  margin-left: 15px;
+}
+
+.el-dropdown > span {
+  color: #409eff;
+}
+
+.el-dropdown:hover {
+  cursor: pointer;
+}
+
+.el-dropdown:nth-child(1) {
+  margin-right: 15px;
+}
+
+.el-dialog__wrapper > .el-dialog {
+  width: 70%;
+}
 </style>
