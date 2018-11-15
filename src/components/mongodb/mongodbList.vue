@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div class="title">
 
       <span>区域：</span>
@@ -35,9 +34,11 @@
                       >
                     </el-table-column>
                     <el-table-column
-                      prop="service_class.service_class_name"
+                      prop="service_class"
                       label="服务规格"
-                      width="100">
+                      width="100"
+                      :formatter="formatClass"
+                      >
                     </el-table-column>
                     <el-table-column
                       prop="create_time"
@@ -197,7 +198,6 @@
   </span>
 </el-dialog>
     </div>
-  </div>
 </template>
 
 <script>
@@ -250,10 +250,8 @@ export default {
           this.mongodbTableData = res;
           this.loading = false;
         })
-        .then(error => {
-          if (error) {
+        .catch(error => {
             console.log(error);
-          }
         });
     },
     formatArchite(row, column) {
@@ -264,6 +262,9 @@ export default {
       let groupId =
         row.run_status in this.destoryStatus ? "--" : row[column.property];
       return groupId;
+    },
+    formatClass(row,column){
+      return row.service_class.service_class_name
     },
     handleClick(row) {
       console.log(row);
