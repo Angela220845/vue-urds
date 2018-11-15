@@ -150,27 +150,132 @@ export default new Router({
           }
         },
         {
-          path: '/sql_review_online',
+          path: '/sql/release',
           component: resolve =>
-            require(['../components/sqlOnline/sqlOnline.vue'], resolve),
+            require(['../components/sql/sqlRelease.vue'], resolve),
           meta: {
             title: 'SQL审核上线'
           }
         },
         {
-          path: '/historical_record',
+          path: '/sql/history',
           component: resolve =>
-            require(['../components/sqlOnline/historicalRecord.vue'], resolve),
+            require(['../components/sql/sqlHistory.vue'], resolve),
           meta: {
             title: '历史记录'
           }
         },
         {
-          path: '/user',
+          path: '/user/user',
           component: resolve =>
             require(['../components/user/user.vue'], resolve),
           meta: {
-            title: '用户'
+            title: '用户管理'
+          }
+        },
+        {
+          path: '/user/profile',
+          component: resolve =>
+            require(['../components/user/profile.vue'], resolve),
+          meta: {
+            title: '个人中心'
+          }
+        }
+      ]
+    },
+    {
+      path: '/config',
+      component: resolve =>
+        require(['../components/config/config.vue'], resolve),
+      meta: {
+        title: '管理页面'
+      },
+      children: [{
+          path: '/config',
+          redirect: '/admin'
+        },
+        {
+          path: '/server',
+          component: resolve => require(['../components/server/server.vue'], resolve),
+          meta: {
+            title: '主机'
+          }
+        },
+        {
+          path: '/proxy',
+          component: resolve => require(['../components/proxy/proxy.vue'], resolve),
+          meta: {
+            title: '流量入口中间件'
+          }
+        },
+        {
+          path: '/sip',
+          component: resolve => require(['../components/sip/sip.vue'], resolve),
+          meta: {
+            title: 'SIP'
+          }
+        },
+        {
+          path: '/zone',
+          component: resolve => require(['../components/zone/zone.vue'], resolve),
+          meta: {
+            title: '可用区'
+          }
+        },
+        {
+          path: '/admin',
+          component: resolve => require(['../components/admin/admin.vue'], resolve),
+          meta: {
+            title: '用户管理'
+          }
+        },
+        {
+          path: '/system_config',
+          component: resolve => require(['../components/systemConfig/systemConfig.vue'], resolve),
+          meta: {
+            title: '系统配置'
+          }
+        },
+        {
+          path: '/template/mysql',
+          component: resolve => require(['../components/template/mysqlTemplate.vue'], resolve),
+          meta: {
+            title: 'mysql模板设置'
+          }
+        },
+        {
+          path: '/template/mongodb',
+          component: resolve => require(['../components/template/mongodbTemplate.vue'], resolve),
+          meta: {
+            title: 'mongodb模板设置'
+          }
+        },
+        {
+          path: '/template/mongodb',
+          component: resolve => require(['../components/template/mongodbTemplate.vue'], resolve),
+          meta: {
+            title: '模板设置'
+          }
+        },
+        {
+          path: '/log',
+          component: resolve => require(['../components/log/log.vue'], resolve),
+          meta: {
+            title: '平台日志'
+          }
+        },
+        {
+          path: '/service_list/mysql',
+          component: resolve => require(['../components/serviceList/mysqlServiceList.vue'], resolve),
+          meta: {
+            title: '服务列表'
+          }
+        },
+        {
+          path: '/service_list/mongodb',
+          component: resolve => require(['../components/serviceList/mongodbServiceList.vue'], resolve),
+          meta: {
+            title: '服务列表'
           }
         }
       ]

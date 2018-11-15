@@ -2,7 +2,17 @@
   <div id="app">
     <el-row>
       <el-col :span="24">
-        <div class="grid-content bg-purple-dark"><span class="icon iconfont icon-yonghu"></span></div>
+        <div class="grid-content bg-purple-dark">
+          <router-link to="/admin">
+            <span class="icon iconfont icon-panel"></span>
+          </router-link>
+          <span class="icon iconfont icon-tuichu"></span>
+          <span class="icon iconfont icon-liebiao"></span>
+          <router-link to="/user">
+          <span class="icon iconfont icon-yonghu"></span>
+          </router-link>
+          </div>
+
       </el-col>
     </el-row>
 
@@ -53,18 +63,48 @@
               <span slot="title">审批</span>
             </el-menu-item>
           </router-link>
-          <router-link to="/sql_review_online">
-            <el-menu-item index="8">
-              <i class="icon iconfont icon-fabu"></i>
-              <span slot="title">SQL上线</span>
-            </el-menu-item>
-          </router-link>
-          <router-link to="/user">
-            <el-menu-item index="9">
-              <i class="icon iconfont icon-yonghu"></i>
-              <span slot="title">用户</span>
-            </el-menu-item>
-          </router-link>
+          <el-submenu index="1">
+            <template slot="title">
+            <span>SQL上线</span>
+            </template>
+            <el-menu-item-group>
+              <router-link to="/sql/release">
+              <el-menu-item index="1-1">
+                <i class="icon iconfont icon-iconset0264"></i>
+                <span>SQL审核上线</span>
+              </el-menu-item>
+              </router-link>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <router-link to="/sql/history">
+              <el-menu-item index="1-2">
+                <i class="icon iconfont icon-lishijilu"></i>
+                <span>历史纪录</span>
+              </el-menu-item>
+              </router-link>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+            <span>用户</span>
+            </template>
+            <el-menu-item-group>
+              <router-link to="/user/user">
+              <el-menu-item index="2-1">
+                <i class="icon iconfont icon-z-user"></i>
+                <span>用户管理</span>
+              </el-menu-item>
+              </router-link>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <router-link to="/user/profile">
+              <el-menu-item index="2-2">
+                <i class="icon iconfont icon-yonghu"></i>
+                <span>个人中心</span>
+              </el-menu-item>
+              </router-link>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-col>
 
@@ -77,76 +117,84 @@
 </template>
 
 <script>
-  export default {
-    name: "App",
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
+export default {
+  name: "App",
+  methods: {
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
     }
-  };
+  }
+};
 </script>
 
 <style>
-  #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  .bg-purple-dark {
-    height: 40px;
-    background-color: #5c678a;
-  }
-  .bg-purple-dark span{
-    height: 40px;
-    width: 50px;
-    cursor: pointer;
-    line-height: 40px;
-    color: white;
-    text-align: center;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-  }
+.bg-purple-dark {
+  height: 40px;
+  background-color: #5c678a;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
 
-  body {
-    position: relative;
-    background-color: lightgray;
-  }
+body {
+  position: relative;
+  background-color: lightgray;
+}
 
-  .el-col-12 {
-    width: 201px;
-  }
+.el-col-12 {
+  width: 210px;
+}
 
-  .aside_nav>div:nth-child(2) {
-    margin-left: 201px;
-    padding: 10px;
-  }
+.aside_nav > div:nth-child(2) {
+  margin-left: 201px;
+  padding: 10px;
+}
 
-  .el-menu {
-    border: none;
-  }
+.el-menu {
+  border: none;
+}
 
-  .el-menu-item,
-  .el-submenu__title {
-    height: 104px;
-    line-height: 104px;
-  }
+.el-menu-item,
+.el-submenu__title {
+  height: 104px;
+  line-height: 104px;
+}
 
-  .el-menu-item span {
-    margin-left: 5px;
-  }
+.el-menu-item span {
+  margin-left: 5px;
+}
 
+/* 更改样式 */
 
-  /* 更改样式 */
-
-  .aside_nav ul {
-    background-color: #e9ebe3;
-    border-right: 5px solid #ccc;
-  }
+.aside_nav ul {
+  background-color: #e9ebe3;
+  border-right: 5px solid #ccc;
+  width: 200px;
+}
+.bg-purple-dark span {
+  height: 40px;
+  width:28px;
+  cursor: pointer;
+  line-height: 40px;
+  color: white;
+  text-align: center;
+  float: right;
+  font-size: 14px;
+}
+.bg-purple-dark span.icon-yun1{
+  font-size: 10px;
+}
+.bg-purple-dark span.icon-liebiao{
+  font-size: 18px;
+}
 </style>
