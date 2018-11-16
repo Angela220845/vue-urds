@@ -69,6 +69,23 @@
                       prop="run_status"
                       label="运行状态"
                       width="120">
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.run_status==='APPROVALING'">
+                          <span class="run_status"><span>等待审批……</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'FAILED'">
+                        <span class="run_status cur"><span>审批失败</span></span>
+                        </div>
+                         <div v-else-if="scope.row.run_status === 'DESTROYED'">
+                        <span class="run_status cur"><span>已销毁</span></span>
+                        </div>
+                         <div v-else-if="scope.row.run_status === 'REFUSED'">
+                        <span class="run_status cur"><span>拒绝审批</span></span>
+                        </div>
+                        <div v-else-if="(scope.row.run_status in instanceStatus.mysqlStopStatus) && (scope.row.run_status in instanceStatus.mysqlAbnormalRunStatus)">
+                          <span class="run_status"><span>停止</span></span>
+                        </div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="uguard_status"

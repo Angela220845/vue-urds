@@ -9,6 +9,7 @@
     style="width: 100%"
     :default-sort = "{prop: 'date', order: 'descending'}"
     @row-click="sipDetails"
+    :highlight-current-row="true"
     >
     <el-table-column
       prop="sip_id"
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-import deleteDialog from './components/dialog'
+import deleteDialog from "./components/dialog";
 export default {
   components: {
     deleteDialog
@@ -53,7 +54,8 @@ export default {
     return {
       sipData: [],
       sipDetail: [],
-      isShow:false
+      isShow: false,
+      select_tr: "select_tr"
     };
   },
   methods: {
@@ -82,7 +84,11 @@ export default {
     },
     showSipDetail() {
       console.log(this.sipDetail.sip_id);
-      this.isShow = true
+      this.isShow = true;
+    },
+    tableRowClassName({ row, rowIndex }) {
+      //把每一行的索引放进row
+      row.index = rowIndex;
     }
   }
 };
