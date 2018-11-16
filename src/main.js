@@ -9,10 +9,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
 import '../static/css/reset.css'
 import './assets/fonts/iconfont.css';
-import {Status} from './instanceStatus';
+import {
+  Status
+} from './instanceStatus';
 // import echarts from 'echarts'
 // Vue.prototype.$echarts = echarts
-import { Axios } from "./common/base/Axios";
+import {
+  Axios
+} from "./common/base/Axios";
 import store from './store/index'
 Vue.prototype.$http = axios.create({
   headers: {
@@ -38,69 +42,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 /* eslint-disable no-new */
-// 设置全局过滤器
-Vue.filter('handleArchite', function (architeObj) {
-  let isHaEnable = architeObj["is_ha_enable"],
-    isRwsEnable = architeObj["is_rws_enable"],
-    isRaEnable = architeObj["is_ra_enable"],
-    isMgrEnable = architeObj["is_mgr_enable"],
-    data = {},
-    origin,
-    architecture,
-    extend = "";
-  if (isMgrEnable) {
-    origin = "三节点MGR";
-    architecture = "mgr";
-    extend = false;
-  } else {
-    if (isHaEnable && isRwsEnable && isRaEnable) {
-      origin = "容灾+读写分离";
-      architecture = "ha_rws_ra";
-    } else {
-      if (!isHaEnable && !isRwsEnable && !isRaEnable) {
-        origin = "单实例";
-        architecture = "single";
-        if (configHa) {
-          extend +=
-            '<dd class="block-item" extend-archite-id="ha">高可用</dd>';
-        }
-        if (configHaRws) {
-          extend +=
-            '<dd class="block-item" extend-archite-id="ha_rws">高可用+读写分离</dd>';
-        }
-      } else if (isHaEnable) {
-        if (!isRwsEnable && !isRaEnable) {
-          origin = "高可用";
-          architecture = "ha";
-          if (configHaRa) {
-            extend +=
-              '<dd class="block-item" extend-archite-id="ha_ra">容灾</dd>';
-          }
-        } else {
-          if (isRwsEnable && !isRaEnable) {
-            origin = "高可用+读写分离";
-            architecture = "ha_rws";
-            if (configHaRaRws) {
-              extend +=
-                '<dd class="block-item" extend-archite-id="ha_rws_ra">容灾+读写分离</dd>';
-            }
-          }
-          if (isRaEnable && !isRwsEnable) {
-            origin = "容灾";
-            architecture = "ha_ra";
-          }
-        }
-      }
-    }
-    if (extend === "") {
-      extend = "no extend";
-    }
-  }
-  data["origin"] = origin;
-  data["extend"] = extend;
-  data["architecture"] = architecture;
-  return data;
-})
+
 new Vue({
   el: '#app',
   router,

@@ -201,7 +201,6 @@ export default {
           number: 20
         })
         .then(res => {
-          console.log(res);
           this.mysqlTableData = res
           this.loading = false;
         });
@@ -210,7 +209,17 @@ export default {
       return row.service_class.service_class_name
     },
     formatArchite(row,column){
-      return row.service_class.service_class_name
+      let architeObj = {
+        is_ha_enable:row.is_ha_enable,
+        is_mgr_enable:row.is_mgr_enable,
+        is_ra_enable:row.is_ra_enable,
+        is_rws_enable:row.is_rws_enable
+      },archite='',extend='',architecture='';
+      archite = this.instanceStatus.mysqlArchite(architeObj).origin;
+      extend = this.instanceStatus.mysqlArchite(architeObj).extend;
+      architecture = this.instanceStatus.mysqlArchite(architeObj).architecture;
+      console.log(archite)
+      return archite
     },
     handleClick(row) {
       console.log(row);

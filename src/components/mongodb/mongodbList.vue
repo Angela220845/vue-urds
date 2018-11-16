@@ -227,7 +227,6 @@ export default {
       serviceList: [],
       dialogVisible: false,
       mongodbTableData: [],
-      // architeObj:{},
       zoneName: "",
       loading: false,
       mongodbStopStatus: this.instanceStatus.mongodbStopStatus,
