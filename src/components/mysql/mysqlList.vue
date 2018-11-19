@@ -30,8 +30,10 @@
                     </el-table-column>
                     <el-table-column
                       prop="mysql_group_id"
-                      label="实例组"
-                      width="120">
+                      label="实例组ID"
+                      width="120"
+                      :formatter="formatGroupId"
+                      >
                     </el-table-column>
                     <el-table-column
                       prop="service_class"
@@ -53,7 +55,9 @@
                     <el-table-column
                       prop="uptime"
                       label="Uptime"
-                      width="120">
+                      width="120"
+                      :formatter="formatUptime"
+                      >
                     </el-table-column>
                     <el-table-column
                       prop="qps"
@@ -71,19 +75,22 @@
                       width="120">
                       <template slot-scope="scope">
                         <div v-if="scope.row.run_status==='APPROVALING'">
-                          <span class="run_status"><span>等待审批……</span></span>
+                          <span class="run_status cur"><span>等待审批……</span></span>
                         </div>
                         <div v-else-if="scope.row.run_status === 'FAILED'">
-                        <span class="run_status cur"><span>审批失败</span></span>
+                        <span class="run_status fail"><span>审批失败</span></span>
                         </div>
                          <div v-else-if="scope.row.run_status === 'DESTROYED'">
-                        <span class="run_status cur"><span>已销毁</span></span>
+                        <span class="run_status destroy"><span>已销毁</span></span>
+                        </div>
+                        <div v-else-if="scope.row.run_status === 'STATUS_MYSQL_HEALTH_OK'">
+                        <span class="run_status run_success"><span>运行</span></span>
                         </div>
                          <div v-else-if="scope.row.run_status === 'REFUSED'">
                         <span class="run_status cur"><span>拒绝审批</span></span>
                         </div>
                         <div v-else-if="(scope.row.run_status in instanceStatus.mysqlStopStatus) && (scope.row.run_status in instanceStatus.mysqlAbnormalRunStatus)">
-                          <span class="run_status"><span>停止</span></span>
+                          <span class="run_status run_error"><span>停止</span></span>
                         </div>
                       </template>
                     </el-table-column>
@@ -106,6 +113,14 @@
                       prop="temp_instances"
                       label="临时实例"
                       width="120">
+                      <template slot-scope="scope">
+                        <div v-if="(scope.row.run_status in instanceStatus.mysqlStopStatus)|| scope.row.is_mgr_enable || (scope.row.temp_instances.length == 0)">
+                          --
+                        </div>
+                        <div v-else>
+                          <span class="view_temp_inst">查看</span>|<span class="destroy_temp_inst">销毁</span>
+                        </div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       prop="archite"
@@ -192,7 +207,8 @@ export default {
   },
   created() {
     this.getMysqlTableData();
-    this.loading = true
+    // this.getMonitorData();
+    this.loading = true;
   },
   data() {
     return {
@@ -203,11 +219,13 @@ export default {
       dialogVisible: false,
       mysqlTableData: [],
       zoneName: "",
-      loading:false
+      loading: false,
+      mysqlIdStr: []
     };
   },
   methods: {
     getMysqlTableData() {
+      let mysqlIdList = [];
       this.axiosApi
         .get("/db_service/search", {
           zone_id: "",
@@ -218,26 +236,54 @@ export default {
           number: 20
         })
         .then(res => {
-          this.mysqlTableData = res
+          this.mysqlTableData = res;
           this.loading = false;
+          res.map(item => {
+            mysqlIdList.push(item.service_id);
+          });
+          console.log(mysqlIdList);
+          this.mysqlIdStr = mysqlIdList.join(",");
+          console.log(this.mysqlIdStr);
+          this.axiosApi.get("db_service/list_stats", {
+            service_ids: this.mysqlIdStr
+          }).then(res=>{
+            console.log(res)
+          });
         });
     },
-    formatClass (row,column){
-      return row.service_class.service_class_name
+    // getMonitorData() {
+    //   console.log(this.mysqlIdStr)
+    //   this.axiosApi.get("db_service/list_stats", {
+    //     service_ids: this.mysqlIdStr
+    //   });
+    // },
+    formatClass(row, column) {
+      return row.service_class.service_class_name;
     },
-    formatArchite(row,column){
+    formatArchite(row, column) {
       let architeObj = {
-        is_ha_enable:row.is_ha_enable,
-        is_mgr_enable:row.is_mgr_enable,
-        is_ra_enable:row.is_ra_enable,
-        is_rws_enable:row.is_rws_enable
-      },archite='',extend='',architecture='';
+          is_ha_enable: row.is_ha_enable,
+          is_mgr_enable: row.is_mgr_enable,
+          is_ra_enable: row.is_ra_enable,
+          is_rws_enable: row.is_rws_enable
+        },
+        archite = "",
+        extend = "",
+        architecture = "";
       archite = this.instanceStatus.mysqlArchite(architeObj).origin;
       extend = this.instanceStatus.mysqlArchite(architeObj).extend;
       architecture = this.instanceStatus.mysqlArchite(architeObj).architecture;
-      console.log(archite)
-      return archite
+      console.log(archite);
+      return archite;
     },
+    formatGroupId(row) {
+      let groupId =
+        row.run_status in this.instanceStatus.destroyStatus
+          ? "--"
+          : row.mysql_group_id;
+      return groupId;
+    },
+    formatUptime(row) {},
     handleClick(row) {
       console.log(row);
       console.log(this.tableData);
@@ -302,5 +348,62 @@ export default {
 
 .el-dialog__wrapper > .el-dialog {
   width: 70%;
+}
+span.fail {
+  color: #ec6d6d;
+  background-color: #fadede;
+  display: block;
+}
+span.cur {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  display: block;
+}
+span.destroy {
+  background-color: #ccc;
+  display: block;
+}
+span.run_status > span {
+  margin-left: 10px;
+}
+span.run_success {
+  color: #26922b;
+}
+
+span.run_error {
+  color: #ff5200;
+}
+span.run_error::before {
+  background-color: red;
+  display: inline-block;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  content: "";
+  -webkit-box-shadow: 2px 2px 6px #c7b852;
+  -moz-box-shadow: 2px 2px 6px #c7b852;
+  -ms-box-shadow: 2px 2px 6px #c7b852;
+  -o-box-shadow: 2px 2px 6px #c7b852;
+  box-shadow: 2px 2px 6px #c7b852;
+}
+span.run_abnormal {
+  color: #d0bd50;
+}
+span.run_abnormal::before {
+  background-color: #f1d82f;
+  display: inline-block;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  content: "";
+  -webkit-box-shadow: 2px 2px 6px #c7b852;
+  -moz-box-shadow: 2px 2px 6px #c7b852;
+  -ms-box-shadow: 2px 2px 6px #c7b852;
+  -o-box-shadow: 2px 2px 6px #c7b852;
+  box-shadow: 2px 2px 6px #c7b852;
+}
+.view_temp_inst,
+.destroy_temp_inst {
+  border-bottom: 1px dotted green;
 }
 </style>

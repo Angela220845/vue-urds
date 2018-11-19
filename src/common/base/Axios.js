@@ -20,8 +20,11 @@ export class Axios {
 
             } else {
               if (this.isObject(res.data)) {
-                console.log('对象')
-                if(this.isArray(res.data.data)){
+                console.log(res.data)
+                if (this.isArray(res.data.data)) {
+                  resolve(res.data.data)
+                } else if (res.data.data == null) {
+                  res.data.data = []
                   resolve(res.data.data)
                 }
                 resolve(res.data)
