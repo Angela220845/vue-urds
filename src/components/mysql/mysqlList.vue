@@ -97,7 +97,9 @@
                     <el-table-column
                       prop="uguard_status"
                       label="高可用状态"
-                      width="120">
+                      width="120"
+                      :formatter="formatHaStatus"
+                      >
                     </el-table-column>
                       <el-table-column
                       prop="group_name"
@@ -244,11 +246,13 @@ export default {
           console.log(mysqlIdList);
           this.mysqlIdStr = mysqlIdList.join(",");
           console.log(this.mysqlIdStr);
-          this.axiosApi.get("db_service/list_stats", {
-            service_ids: this.mysqlIdStr
-          }).then(res=>{
-            console.log(res)
-          });
+          this.axiosApi
+            .get("db_service/list_stats", {
+              service_ids: this.mysqlIdStr
+            })
+            .then(res => {
+              console.log(res);
+            });
         });
     },
     // getMonitorData() {
@@ -284,6 +288,31 @@ export default {
       return groupId;
     },
     formatUptime(row) {},
+    formatHaStatus(row) {
+      var obj = {
+          "service-5c162y": {
+            ha_enable: "UGUARD_ENABLE",
+            uguard_status: "UGUARD_PRIMARY_SLAVE_ENABLE"
+          },
+          "service-u1q1f9": {
+            ha_enable: "UGUARD_ENABLE",
+            uguard_status: "SLA_IS_DISABLED"
+          }
+        },
+        list = [
+          {
+            service_id: "service-5c162y"
+          },
+          {
+            service_id: "service-u1q1f9"
+          }
+        ];
+      _.each(list, function(item) {
+        item["uguard_status"] = obj[item.service_id].uguard_status;
+        item["ha_enable"] = obj[item.service_id].ha_enable;
+      });
+      console.log(list);
+    },
     handleClick(row) {
       console.log(row);
       console.log(this.tableData);
