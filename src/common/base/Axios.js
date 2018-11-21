@@ -21,7 +21,10 @@ export class Axios {
             } else {
               if (this.isObject(res.data)) {
                 console.log(res.data)
-                if (this.isArray(res.data.data)) {
+                if(res.data.data == undefined){
+                  resolve(res.data)
+                }
+                else if (this.isArray(res.data.data)) {
                   resolve(res.data.data)
                 } else if (res.data.data == null) {
                   res.data.data = []

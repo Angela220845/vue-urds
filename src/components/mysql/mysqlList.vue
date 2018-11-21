@@ -222,7 +222,8 @@ export default {
       mysqlTableData: [],
       zoneName: "",
       loading: false,
-      mysqlIdStr: []
+      mysqlIdStr: [],
+      uguardStatusObj: {}
     };
   },
   methods: {
@@ -243,24 +244,19 @@ export default {
           res.map(item => {
             mysqlIdList.push(item.service_id);
           });
-          console.log(mysqlIdList);
           this.mysqlIdStr = mysqlIdList.join(",");
-          console.log(this.mysqlIdStr);
           this.axiosApi
-            .get("db_service/list_stats", {
+            .get("/db_service/list_stats", {
               service_ids: this.mysqlIdStr
             })
-            .then(res => {
-              console.log(res);
+            .then(response => {
+              for (var item of this.mysqlTableData) {
+                item["uguard_status"] = response[item.service_id].uguard_status;
+                item["ha_enable"] = response[item.service_id].ha_enable;
+              }
             });
         });
     },
-    // getMonitorData() {
-    //   console.log(this.mysqlIdStr)
-    //   this.axiosApi.get("db_service/list_stats", {
-    //     service_ids: this.mysqlIdStr
-    //   });
-    // },
     formatClass(row, column) {
       return row.service_class.service_class_name;
     },
@@ -277,7 +273,6 @@ export default {
       archite = this.instanceStatus.mysqlArchite(architeObj).origin;
       extend = this.instanceStatus.mysqlArchite(architeObj).extend;
       architecture = this.instanceStatus.mysqlArchite(architeObj).architecture;
-      console.log(archite);
       return archite;
     },
     formatGroupId(row) {
@@ -288,31 +283,7 @@ export default {
       return groupId;
     },
     formatUptime(row) {},
-    formatHaStatus(row) {
-      var obj = {
-          "service-5c162y": {
-            ha_enable: "UGUARD_ENABLE",
-            uguard_status: "UGUARD_PRIMARY_SLAVE_ENABLE"
-          },
-          "service-u1q1f9": {
-            ha_enable: "UGUARD_ENABLE",
-            uguard_status: "SLA_IS_DISABLED"
-          }
-        },
-        list = [
-          {
-            service_id: "service-5c162y"
-          },
-          {
-            service_id: "service-u1q1f9"
-          }
-        ];
-      _.each(list, function(item) {
-        item["uguard_status"] = obj[item.service_id].uguard_status;
-        item["ha_enable"] = obj[item.service_id].ha_enable;
-      });
-      console.log(list);
-    },
+    formatHaStatus(row) {},
     handleClick(row) {
       console.log(row);
       console.log(this.tableData);

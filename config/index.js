@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://10.186.62.20:25715', // urds
+        // target: 'http://10.186.62.20:25715', // urds
+        target: 'http://10.186.30.166:25715', // urds
         // target: 'http://10.186.18.126:5715', // 测试urds
         // target: 'http://10.186.62.20:25799', // umc
         // target:'http://10.186.30.17:5715/', //产品urds
