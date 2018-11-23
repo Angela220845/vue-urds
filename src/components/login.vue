@@ -5,29 +5,30 @@
 </template>
 
 <script>
-  export default {
-    created() {},
-    data() {
-      return {};
-    },
-    methods: {
-      login() {
-        this.$http
-          .post("/api/user/login", {
-            user_group: "root",
-            user: window.btoa("root"),
-            password: window.btoa("root")
-          })
-          .then(res => {
-            console.log(res);
-            this.$router.push({
-              path: "/resource_statistics"
-            }).catch((err) => {
-              console.log(err)
-            });
+export default {
+  created() {},
+  data() {
+    return {};
+  },
+  methods: {
+    login() {
+      this.$http
+        .post("/api/user/login", {
+          user_group: "root",
+          user: window.btoa("root"),
+          password: window.btoa("root")
+        })
+        .then(res => {
+          console.log(res);
+          this.$router.push({
+            path: "/resource_statistics"
           });
-        console.log("登录");
-      }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      console.log("登录");
     }
-  };
+  }
+};
 </script>
