@@ -16,6 +16,7 @@
                     border
                     style="width: 100%"
                     v-loading="loading"
+                    @cell-mouse-enter="showTip"
                     >
                     <el-table-column
                       fixedID
@@ -100,6 +101,23 @@
                       width="120"
                       :formatter="formatHaStatus"
                       >
+                      <template slot-scope="scope">
+                        <div v-if="scope.row.uguard_status =='UGUARD_MANAGER_DOWN'">
+                          <span class="run_malfunction">故障(Manager)</span>
+                        </div>
+                        <div v-else-if="scope.row.uguard_status =='UGUARD_PRIMARY_SLAVE_ENABLE'">
+                          <span class="run_checkout">可切换</span>
+                        </div>
+                        <div v-else-if="scope.row.uguard_status =='UGUARD_NO_PRIMARY_SLAVE'">
+                          <span class="run_not_checkout">没有可切换的备机</span>
+                        </div>
+                        <div v-else-if="scope.row.uguard_status =='SLA_IS_DISABLED'">
+                          <span class="run_not_checkout">不可切换</span>
+                        </div>
+                        <div v-else-if="scope.row.uguard_status =='UGUARD_DISABLE'">
+                          <span class="run_not_configuration">未配置</span>
+                        </div>
+                      </template>
                     </el-table-column>
                       <el-table-column
                       prop="group_name"
@@ -250,9 +268,14 @@ export default {
               service_ids: this.mysqlIdStr
             })
             .then(response => {
-              for (var item of this.mysqlTableData) {
-                item["uguard_status"] = response[item.service_id].uguard_status;
-                item["ha_enable"] = response[item.service_id].ha_enable;
+              for (let item of this.mysqlTableData) {
+                for (let value of this.mysqlTableData) {
+                  this.$set(
+                    value,
+                    "uguard_status",
+                    response[item.service_id].uguard_status
+                  );
+                }
               }
             });
         });
@@ -283,7 +306,15 @@ export default {
       return groupId;
     },
     formatUptime(row) {},
-    formatHaStatus(row) {},
+    formatHaStatus(row, column) {
+      return row[column.property];
+    },
+    showTip(row, column, cell, event) {
+      // console.log(row);
+      // console.log(column);
+      // console.log(cell);
+      // console.log(event);
+    },
     handleClick(row) {
       console.log(row);
       console.log(this.tableData);
@@ -405,5 +436,20 @@ span.run_abnormal::before {
 .view_temp_inst,
 .destroy_temp_inst {
   border-bottom: 1px dotted green;
+}
+.run_checkout {
+  color: green;
+}
+
+.run_not_checkout {
+  color: #d0bd50;
+}
+
+.run_malfunction {
+  color: red;
+}
+
+.run_not_configuration {
+  color: gray;
 }
 </style>
