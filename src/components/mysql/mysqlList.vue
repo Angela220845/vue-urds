@@ -105,6 +105,13 @@
                         <div v-if="haStatusObj[scope.row.uguard_status]">
                         <div slot="reference" :class="haStatusObj[scope.row.uguard_status].className">{{haStatusObj[scope.row.uguard_status].description}}</div>
                        </div>
+                        <el-popover trigger="hover" placement="top">
+                          <p>{{ scope.row.db_service_name }}</p>
+                          <p>{{ scope.row.db_service_name }}</p>
+                          <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.db_service_name }}</el-tag>
+                          </div>
+                        </el-popover>
                       </template>
                     </el-table-column>
                       <el-table-column
