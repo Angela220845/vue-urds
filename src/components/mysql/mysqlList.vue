@@ -102,21 +102,9 @@
                       :formatter="formatHaStatus"
                       >
                       <template slot-scope="scope">
-                        <div v-if="scope.row.uguard_status =='UGUARD_MANAGER_DOWN'">
-                          <span class="run_malfunction">故障(Manager)</span>
-                        </div>
-                        <div v-else-if="scope.row.uguard_status =='UGUARD_PRIMARY_SLAVE_ENABLE'">
-                          <span class="run_checkout">可切换</span>
-                        </div>
-                        <div v-else-if="scope.row.uguard_status =='UGUARD_NO_PRIMARY_SLAVE'">
-                          <span class="run_not_checkout">没有可切换的备机</span>
-                        </div>
-                        <div v-else-if="scope.row.uguard_status =='SLA_IS_DISABLED'">
-                          <span class="run_not_checkout">不可切换</span>
-                        </div>
-                        <div v-else-if="scope.row.uguard_status =='UGUARD_DISABLE'">
-                          <span class="run_not_configuration">未配置</span>
-                        </div>
+                        <div v-if="haStatusObj[scope.row.uguard_status]">
+                        <div slot="reference" :class="haStatusObj[scope.row.uguard_status].className">{{haStatusObj[scope.row.uguard_status].description}}</div>
+                       </div>
                       </template>
                     </el-table-column>
                       <el-table-column
@@ -241,7 +229,29 @@ export default {
       zoneName: "",
       loading: false,
       mysqlIdStr: [],
-      uguardStatusObj: {}
+      uguardStatusObj: {},
+      haStatusObj: {
+        UGUARD_MANAGER_DOWN: {
+          description: "故障(Manager)",
+          className: "run_malfunction"
+        },
+        UGUARD_PRIMARY_SLAVE_ENABLE: {
+          description: "可切换",
+          className: "run_checkout"
+        },
+        UGUARD_NO_PRIMARY_SLAVE: {
+          description: "没有可切换的备机",
+          className: "run_not_checkout"
+        },
+        SLA_IS_DISABLED: {
+          description: "不可切换",
+          className: "run_not_checkout"
+        },
+        UGUARD_DISABLE: {
+          description: "未配置",
+          className: "run_not_configuration"
+        }
+      }
     };
   },
   methods: {
