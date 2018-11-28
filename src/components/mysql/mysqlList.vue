@@ -254,7 +254,8 @@ export default {
           status: "未配置",
           className: "run_not_configuration"
         }
-      }
+      },
+      masterMysqlId:''
     };
   },
   methods: {
@@ -272,6 +273,7 @@ export default {
         .then(res => {
           this.mysqlTableData = res;
           this.loading = false;
+
           res.map(item => {
             mysqlIdList.push(item.service_id);
           });
@@ -292,6 +294,15 @@ export default {
               }
             });
         });
+    },
+    getMonitorData() {
+      let endTime = parseInt((new Date).getTime() / Math.pow(10, 3)),
+            startTime = endTime - 60 * 60;
+      this.axiosApi.get("/db_service/mysql_monitors", {
+        master_mysql_ids: "mysql-wz5f8l",
+        start_unix_time: startTime,
+        end_unix_time: endTime
+      });
     },
     formatClass(row, column) {
       return row.service_class.service_class_name;
