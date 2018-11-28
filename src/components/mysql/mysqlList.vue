@@ -16,7 +16,6 @@
                     border
                     style="width: 100%"
                     v-loading="loading"
-                    @cell-mouse-enter="showTip"
                     >
                     <el-table-column
                       fixedID
@@ -103,15 +102,10 @@
                       >
                       <template slot-scope="scope">
                         <div v-if="haStatusObj[scope.row.uguard_status]">
-                        <div slot="reference" :class="haStatusObj[scope.row.uguard_status].className">{{haStatusObj[scope.row.uguard_status].description}}</div>
-                       </div>
-                        <el-popover trigger="hover" placement="top">
-                          <p>{{ scope.row.db_service_name }}</p>
-                          <p>{{ scope.row.db_service_name }}</p>
-                          <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">{{ scope.row.db_service_name }}</el-tag>
-                          </div>
+                        <el-popover trigger="hover" placement="top" popper-class="popover_style" :content="haStatusObj[scope.row.uguard_status].description">
+                        <div slot="reference" :class="haStatusObj[scope.row.uguard_status].className">{{haStatusObj[scope.row.uguard_status].status}}</div>
                         </el-popover>
+                       </div>
                       </template>
                     </el-table-column>
                       <el-table-column
@@ -239,23 +233,25 @@ export default {
       uguardStatusObj: {},
       haStatusObj: {
         UGUARD_MANAGER_DOWN: {
-          description: "故障(Manager)",
+          status: "故障(Manager)",
           className: "run_malfunction"
         },
         UGUARD_PRIMARY_SLAVE_ENABLE: {
-          description: "可切换",
+          status: "可切换",
           className: "run_checkout"
         },
         UGUARD_NO_PRIMARY_SLAVE: {
+          status: "不可切换",
           description: "没有可切换的备机",
           className: "run_not_checkout"
         },
         SLA_IS_DISABLED: {
-          description: "不可切换",
+          status: "不可切换",
+          description: "没有开启sla服务",
           className: "run_not_checkout"
         },
         UGUARD_DISABLE: {
-          description: "未配置",
+          status: "未配置",
           className: "run_not_configuration"
         }
       }
@@ -325,12 +321,6 @@ export default {
     formatUptime(row) {},
     formatHaStatus(row, column) {
       return row[column.property];
-    },
-    showTip(row, column, cell, event) {
-      // console.log(row);
-      // console.log(column);
-      // console.log(cell);
-      // console.log(event);
     },
     handleClick(row) {
       console.log(row);
@@ -468,5 +458,8 @@ span.run_abnormal::before {
 
 .run_not_configuration {
   color: gray;
+}
+.popover_style p {
+  color: #d0bd50;
 }
 </style>
