@@ -8,6 +8,13 @@
         </el-option>
       </el-select>
       <span>关键字：</span>
+      <table>
+        <tr v-for="(item,index) in mysqlTableData" :key="index">
+          <td>
+            <span v-text="item.service_id"></span>
+          </td>
+        </tr>
+      </table>
       <el-input v-model="keyword" class="el-input" placeholder="请输入关键词"></el-input>
       <el-button type="primary">搜索</el-button>
       <template>
@@ -98,12 +105,14 @@
                       prop="uguard_status"
                       label="高可用状态"
                       width="120"
-                      :formatter="formatHaStatus"
                       >
                       <template slot-scope="scope">
-                        <div v-if="haStatusObj[scope.row.uguard_status]">
+                       <div v-if="scope.row.run_status in instanceStatus.destroyStatus">
+                        <div>--</div>
+                       </div>
+                       <div v-else-if="!(scope.row.run_status in instanceStatus.destroyStatus) && haStatusObj[scope.row.uguard_status]">
                         <el-popover trigger="hover" placement="top" popper-class="popover_style" :content="haStatusObj[scope.row.uguard_status].description">
-                        <div slot="reference" :class="haStatusObj[scope.row.uguard_status].className">{{haStatusObj[scope.row.uguard_status].status}}</div>
+                          <div slot="reference" :class="haStatusObj[scope.row.uguard_status].className">{{(scope.row.run_status in instanceStatus.destroyStatus)?'--':haStatusObj[scope.row.uguard_status].status}}</div>
                         </el-popover>
                        </div>
                       </template>
@@ -144,7 +153,11 @@
                       label="操作"
                       width="100">
                       <template slot-scope="scope">
-                        <el-dropdown trigger="click">
+                        <div v-if="scope.row.run_status in instanceStatus.mysqlAbnormalRunStatus">
+                          --
+                        </div>
+                        <div v-else>
+                          <el-dropdown trigger="click">
                           <span class="el-dropdown-link">
                             查看
                           </span>
@@ -183,7 +196,8 @@
                             <el-dropdown-item :command="scope.row.service_id">重置用户密码</el-dropdown-item>
                           </el-dropdown-menu>
                         </el-dropdown>
-</template>
+                        </div>
+                      </template>
           </el-table-column>
         </el-table>
       </template>
@@ -216,7 +230,7 @@ export default {
   },
   created() {
     this.getMysqlTableData();
-    // this.getMonitorData();
+    this.getMonitorData();
     this.loading = true;
   },
   data() {
@@ -255,12 +269,12 @@ export default {
           className: "run_not_configuration"
         }
       },
-      masterMysqlId:''
+      masterMysqlIds: ""
     };
   },
   methods: {
     getMysqlTableData() {
-      let mysqlIdList = [];
+      let mysqlIdList = [],masterMysqlIdList=[];
       this.axiosApi
         .get("/db_service/search", {
           zone_id: "",
@@ -276,8 +290,10 @@ export default {
 
           res.map(item => {
             mysqlIdList.push(item.service_id);
+            masterMysqlIdList.push(item.master_mysql_id);
           });
           this.mysqlIdStr = mysqlIdList.join(",");
+          this.masterMysqlIds = masterMysqlIdList.join(',');
           this.axiosApi
             .get("/db_service/list_stats", {
               service_ids: this.mysqlIdStr
@@ -285,19 +301,23 @@ export default {
             .then(response => {
               for (let item of this.mysqlTableData) {
                 for (let value of this.mysqlTableData) {
-                  this.$set(
-                    value,
-                    "uguard_status",
-                    response[item.service_id].uguard_status
-                  );
+                  if (response[item.service_id]) {
+                    this.$set(
+                      value,
+                      "uguard_status",
+                      response[item.service_id].uguard_status
+                    );
+                  }
                 }
               }
             });
         });
     },
     getMonitorData() {
-      let endTime = parseInt((new Date).getTime() / Math.pow(10, 3)),
-            startTime = endTime - 60 * 60;
+      // 请求id:mysql-t01634,mysql-4o2ovx
+      console.log(this.masterMysqlIds)
+      let endTime = parseInt(new Date().getTime() / Math.pow(10, 3)),
+        startTime = endTime - 60 * 60;
       this.axiosApi.get("/db_service/mysql_monitors", {
         master_mysql_ids: "mysql-wz5f8l",
         start_unix_time: startTime,
@@ -330,9 +350,6 @@ export default {
       return groupId;
     },
     formatUptime(row) {},
-    formatHaStatus(row, column) {
-      return row[column.property];
-    },
     handleClick(row) {
       console.log(row);
       console.log(this.tableData);
