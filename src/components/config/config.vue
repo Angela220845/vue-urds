@@ -48,7 +48,7 @@
               <span slot="title">用户管理</span>
             </el-menu-item>
           </router-link>
-          <router-link to="/admin">
+          <router-link to="/system_config">
             <el-menu-item index="6">
               <i class="icon iconfont icon-shezhi"></i>
               <span slot="title">系统配置</span>

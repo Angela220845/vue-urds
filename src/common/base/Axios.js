@@ -57,12 +57,15 @@ export class Axios {
   post(url, params = {}) {
     return new Promise((resolve, reject) => {
       axios
-        .post(url, params)
+        .post('/api'+url, params)
         .then(res => {
           resolve(res);
+          console.log('jhh'+url)
         })
         .catch(error => {
           reject(error);
+          console.log(url)
+
         });
     });
   }
