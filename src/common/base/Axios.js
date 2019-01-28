@@ -1,5 +1,17 @@
 import axios from 'axios';
+import Qs from 'qs'
 export class Axios {
+  constructor() {
+    this.$http = axios.create({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      transformRequest: [function (data) { //在请求之前对data传参进行格式转换
+        data = Qs.stringify(data)
+        return data
+      }]
+    });
+  }
   isArray(o) {
     return Object.prototype.toString.call(o) == '[object Array]';
   }
@@ -8,7 +20,7 @@ export class Axios {
   }
   get(url, data = {}) {
     return new Promise((resolve, reject) => {
-      axios
+      this.$http
         .get('/api' + url, {
           params: data
         })
@@ -21,10 +33,9 @@ export class Axios {
             } else {
               if (this.isObject(res.data)) {
                 console.log(res.data)
-                if(res.data.data == undefined){
+                if (res.data.data == undefined) {
                   resolve(res.data)
-                }
-                else if (this.isArray(res.data.data)) {
+                } else if (this.isArray(res.data.data)) {
                   resolve(res.data.data)
                 } else if (res.data.data == null) {
                   res.data.data = []
@@ -56,11 +67,11 @@ export class Axios {
   }
   post(url, params = {}) {
     return new Promise((resolve, reject) => {
-      axios
-        .post('/api'+url, params)
+      this.$http
+        .post('/api' + url, params)
         .then(res => {
           resolve(res);
-          console.log('jhh'+url)
+          console.log('jhh' + url)
         })
         .catch(error => {
           reject(error);
@@ -71,7 +82,7 @@ export class Axios {
   }
   delete(url, params = {}) {
     return new Promise((resolve, reject) => {
-      axios
+      this.$http
         .delete(url, params)
         .then(res => {
           resolve(res);
@@ -83,7 +94,7 @@ export class Axios {
   }
   put(url, params = {}) {
     return new Promise((resolve, reject) => {
-      axios
+      this.$http
         .put(url, params)
         .then(res => {
           resolve(res);
@@ -95,7 +106,7 @@ export class Axios {
   }
   allPost(params) {
     return new Promise((resolve, reject) => {
-      axios
+      this.$http
         .all(params)
         .then(
           axios.spread(res => {
@@ -108,12 +119,12 @@ export class Axios {
     });
   }
   all(params) {
-    return axios.all(params);
+    return this.$http.all(params);
   }
   spread(fun) {
-    return axios.spread(fun);
+    return this.$http.spread(fun);
   }
   config(config) {
-    return axios(config);
+    return this.$http(config);
   }
 }
