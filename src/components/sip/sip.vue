@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     getSipData() {
-      this.axiosApi.get("/sip/search").then(res => {
+      this.axiosApi.get("v3/sip/list").then(res => {
         this.sipData = res;
       });
     },
