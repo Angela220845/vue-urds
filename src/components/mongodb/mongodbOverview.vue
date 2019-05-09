@@ -58,19 +58,19 @@
             </el-tab-pane>
             <el-tab-pane label="架构：高可用">
                 <div>
-                    <p><span>CPU:{{overviewData.mongodb_instances[0].cpu}}</span>|<span>内存:{{overviewData.mongodb_instances[0].memory}}</span>|<span>磁盘:{{overviewData.mongodb_instances[0].disk}}</span>
+                    <p><span>CPU:{{overviewData.service_instances[0].cpu}}</span>|<span>内存:{{overviewData.service_instances[0].memory}}</span>|<span>磁盘:{{overviewData.service_instances[0].disk}}</span>
                     </p>
                     <div class="zone_name">{{overviewData.zone_id+'('+overviewData.zone_name+')'}}</div>
                 </div>
                 <div class="icon iconfont icon-shujuku">
-                    <span class="tag">{{overviewData.mongodb_instances[0].role | initialCapitalization}}</span>
-                    <p>{{overviewData.mongodb_instances[0].mongodb_id}}</p>
-                    <p>{{overviewData.mongodb_instances[0].ip+':'+overviewData.mongodb_instances[0].port}}</p>
+                    <span class="tag">{{overviewData.service_instances[0].role | initialCapitalization}}</span>
+                    <p>{{overviewData.service_instances[0].mongodb_id}}</p>
+                    <p>{{overviewData.service_instances[0].ip+':'+overviewData.service_instances[0].port}}</p>
                 </div>
                 <!-- <div class="icon iconfont icon-shujuku">
-                    <span class="tag">{{overviewData.mongodb_instances[1].role | initialCapitalization}}</span>
-                    <p>{{overviewData.mongodb_instances[1].mongodb_id}}</p>
-                    <p>{{overviewData.mongodb_instances[1].ip+':'+overviewData.mongodb_instances[0].port}}</p>
+                    <span class="tag">{{overviewData.service_instances[1].role | initialCapitalization}}</span>
+                    <p>{{overviewData.service_instances[1].mongodb_id}}</p>
+                    <p>{{overviewData.service_instances[1].ip+':'+overviewData.service_instances[0].port}}</p>
                 </div> -->
             </el-tab-pane>
         </el-tabs>
@@ -78,125 +78,124 @@
 </template>
 
 <script>
-    
-    export default {
-        created() {
-            this.getOverviewData()
-        },
-        data() {
-            return {
-                overviewData: {},
-                service_id: ''
-            }
-        },
-        methods: {
-            getOverviewData() {
-                //  传入params获取数据
-                this.$http.get('/api/mongodb/detail', {
-                    params: {
-                        service_id: this.$route.query.service_id
-                    }
-                }).then((res) => {
-                    if (res.status == 200) {
-                        console.log(res.data)
-                        this.overviewData = res.data;
-                    }
-                })
-            }
-        },
-        filters: {
-            initialCapitalization(value) {
-                if (!value) {
-                    return ''
-                }
-                var arr = value.split('_')
-                return arr[2].charAt(0).toLocaleUpperCase() + (arr[2].slice(1)).toLocaleLowerCase()
-            }
-    
-        }
+export default {
+  created() {
+    this.getOverviewData();
+  },
+  data() {
+    return {
+      overviewData: {},
+      service_id: ""
+    };
+  },
+  methods: {
+    getOverviewData() {
+      //  传入params获取数据
+      this.axiosApi
+        .get("v3/mongodb/service", {
+          db_service_id: this.$route.query.db_service_id
+        })
+        .then(res => {
+            this.overviewData = res;
+        });
     }
+  },
+  filters: {
+    initialCapitalization(value) {
+      if (!value) {
+        return "";
+      }
+      var arr = value.split("_");
+      console.log(value);
+      return (
+        arr[2].charAt(0).toLocaleUpperCase() +
+        arr[2].slice(1).toLocaleLowerCase()
+      );
+    }
+  }
+};
 </script>
 
 <style :lang="css" scoped>
-    div[role='tabpanel'] {
-        padding-left: 40%;
-    }
-    
-    div[role='tabpanel']:last-child {
-        padding-left: 0;
-    }
-    
-    ul>li {
-        margin-top: 20px;
-        color: #909399;
-    }
-    
-    li>div:first-child {
-        float: left;
-        width: 150px;
-    }
-    
-    #pane-4 {
-        height: 200px;
-        padding-left: 0;
-        position: relative;
-    }
-    
-    #pane-4>div {
-        text-align: center;
-    }
-    
-    #pane-4>div:nth-child(1) {
-        width: 100%;
-        color: green;
-        margin-bottom: 40px;
-    }
-    
-    #pane-4>div:nth-child(2) {
-        width: 49%;
-        height: 160px;
-        background-color: #eee;
-        clear: both;
-        float: left;
-        color: #00a8e6;
-        padding-top: 20px;
-        box-sizing: border-box;
-        position: relative;
-    }
-    
-    #pane-4>div:nth-child(2) span {
-        border: 1px solid #00a8e6;
-    }
-    
-    #pane-4>div:nth-child(3) {
-        width: 49%;
-        height: 160px;
-        float: right;
-        color: #666;
-        background-color: #eee;
-        padding-top: 20px;
-        box-sizing: border-box;
-        position: relative;
-    }
-    
-    #pane-4>div:nth-child(3) span {
-        border: 1px solid #666;
-    }
-    
-    #pane-4>div:before {
-        font-size: 50px;
-    }
-    
-    .zone_name {
-        float: left;
-    }
-    
-    .tag {
-        padding: 2px;
-        border-radius: 4px;
-        font-size: 14px;
-        position: absolute;
-        left: 10px;
-        top: -10px;
-    }
+div[role="tabpanel"] {
+  padding-left: 40%;
+}
+
+div[role="tabpanel"]:last-child {
+  padding-left: 0;
+}
+
+ul > li {
+  margin-top: 20px;
+  color: #909399;
+}
+
+li > div:first-child {
+  float: left;
+  width: 150px;
+}
+
+#pane-4 {
+  height: 200px;
+  padding-left: 0;
+  position: relative;
+}
+
+#pane-4 > div {
+  text-align: center;
+}
+
+#pane-4 > div:nth-child(1) {
+  width: 100%;
+  color: green;
+  margin-bottom: 40px;
+}
+
+#pane-4 > div:nth-child(2) {
+  width: 49%;
+  height: 160px;
+  background-color: #eee;
+  clear: both;
+  float: left;
+  color: #00a8e6;
+  padding-top: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#pane-4 > div:nth-child(2) span {
+  border: 1px solid #00a8e6;
+}
+
+#pane-4 > div:nth-child(3) {
+  width: 49%;
+  height: 160px;
+  float: right;
+  color: #666;
+  background-color: #eee;
+  padding-top: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#pane-4 > div:nth-child(3) span {
+  border: 1px solid #666;
+}
+
+#pane-4 > div:before {
+  font-size: 50px;
+}
+
+.zone_name {
+  float: left;
+}
+
+.tag {
+  padding: 2px;
+  border-radius: 4px;
+  font-size: 14px;
+  position: absolute;
+  left: 10px;
+  top: -10px;
+}
 </style>

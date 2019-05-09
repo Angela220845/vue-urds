@@ -30,7 +30,7 @@ export default new Router({
           path: '/resource_statistics',
           // component: resolve =>
           //   require(['../components/resourceStatistics/resourceStatistics.vue'], resolve),
-          component: resolve => require(['../components/components/modal/table.vue'], resolve),
+          component: resolve => require(['../components/resourceStatistics/resourceStatistics.vue'], resolve),
           meta: {
             title: '资源统计'
           }

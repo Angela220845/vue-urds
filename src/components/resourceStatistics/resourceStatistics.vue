@@ -133,7 +133,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       statisticsDetailObj: {},
       cpuPercent: 0,
       ramPercent: 0,
@@ -144,10 +144,8 @@ export default {
   },
   methods: {
     getStatisticsDetail() {
-      this.$http.get("/api/statistics/detail").then(res => {
-        if (res.status == 200) {
+      this.Axios.get("v3/statistics/list").then(res => {
           this.loading = false;
-        }
         this.statisticsDetailObj = res.data;
         this.cpuPercent =
           this.statisticsDetailObj.use_cpu / this.statisticsDetailObj.cpu * 100;
@@ -162,21 +160,20 @@ export default {
       });
     },
     getZoneDetail() {
-      this.$http.get("/api/statistics/zone_detail").then(res => {
-        if (res.status == 200) {
-          this.loading = false;
-          this.zoneTableData = res.data;
-        }
-      });
+      // this.$http.get("/api/statistics/zone_detail").then(res => {
+      //   if (res.status == 200) {
+      //     this.loading = false;
+      //     this.zoneTableData = res.data;
+      //   }
+      // });
     },
     getCostsDetail() {
-      this.$http.get("/api/statistics/costs").then(res => {
-        if (res.status == 200) {
+      this.Axios.get("v3/statistics/total_costs").then(res => {
           this.loading = false;
-          this.costsData = res.data;
+          this.costsData = res;
           // 返回数据为空的时候是null
-          console.log(res.data)
-        }
+          console.log(res)
+        
       });
     }
   }

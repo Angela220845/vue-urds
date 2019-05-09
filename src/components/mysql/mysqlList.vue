@@ -26,7 +26,7 @@
                     >
                     <el-table-column
                       fixedID
-                      prop="service_id"
+                      prop="db_service_id"
                       label="服务ID"
                       width="100">
                     </el-table-column>
@@ -36,7 +36,7 @@
                       width="120">
                     </el-table-column>
                     <el-table-column
-                      prop="mysql_group_id"
+                      prop="group_id"
                       label="实例组ID"
                       width="120"
                       :formatter="formatGroupId"
@@ -276,7 +276,7 @@ export default {
     getMysqlTableData() {
       let mysqlIdList = [],masterMysqlIdList=[];
       this.axiosApi
-        .get("/db_service/search", {
+        .get("v3/database/list_services", {
           zone_id: "",
           order_by: "create_time",
           order: "desc",
@@ -289,14 +289,14 @@ export default {
           this.loading = false;
 
           res.map(item => {
-            mysqlIdList.push(item.service_id);
+            mysqlIdList.push(item.db_service_id);
             masterMysqlIdList.push(item.master_mysql_id);
           });
           this.mysqlIdStr = mysqlIdList.join(",");
           this.masterMysqlIds = masterMysqlIdList.join(',');
           this.axiosApi
-            .get("/db_service/list_stats", {
-              service_ids: this.mysqlIdStr
+            .get("v3/database/list_services_status", {
+              db_service_ids: this.mysqlIdStr
             })
             .then(response => {
               for (let item of this.mysqlTableData) {
@@ -318,10 +318,13 @@ export default {
       console.log(this.masterMysqlIds)
       let endTime = parseInt(new Date().getTime() / Math.pow(10, 3)),
         startTime = endTime - 60 * 60;
-      this.axiosApi.get("/db_service/mysql_monitors", {
-        master_mysql_ids: "mysql-wz5f8l",
-        start_unix_time: startTime,
-        end_unix_time: endTime
+      this.axiosApi.get("/v3/database/list_monitor", {
+        master_mysql_ids: "mysql-dbwsvw",
+        date_from: startTime,
+        date_to: endTime
+      }).then(data=>{
+      const newData = JSON.parse(data);
+      console.log(newData);//监控数据
       });
     },
     formatClass(row, column) {
@@ -329,7 +332,7 @@ export default {
     },
     formatArchite(row, column) {
       let architeObj = {
-          is_ha_enable: row.is_ha_enable,
+          is_ha_enable: row.ha_enable,
           is_mgr_enable: row.is_mgr_enable,
           is_ra_enable: row.is_ra_enable,
           is_rws_enable: row.is_rws_enable
@@ -346,7 +349,7 @@ export default {
       let groupId =
         row.run_status in this.instanceStatus.destroyStatus
           ? "--"
-          : row.mysql_group_id;
+          : row.group_id;
       return groupId;
     },
     formatUptime(row) {},

@@ -44,8 +44,7 @@ export class Axios {
                 resolve(res.data)
               } else if (res.data.data == null) {
                 console.log(3)
-                res.data.data = []
-                resolve(res.data.data)
+                resolve(res.data)
 
               } else if (res.data.data != undefined) {
                 // resolve(res.data)

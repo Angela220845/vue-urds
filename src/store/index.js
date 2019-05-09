@@ -30,7 +30,7 @@ export default new Vuex.Store({
       commit
     }) {
       return new Promise((resolve, reject) => {
-        axiosApi.get("/zone/search")
+        axiosApi.get("v3/zone/list")
           .then(res => {
             res.unshift({
               zone_id: "",
@@ -59,7 +59,7 @@ export default new Vuex.Store({
     },
     getLoginAccount({commit}){
       return new Promise((resolve,reject)=>{
-        axiosApi.get('user/login_account').then(res=>{
+        axiosApi.get('v3/user/login_account').then(res=>{
           commit('initLoginAccount',res)
           resolve(res)
         }).catch(error=>{

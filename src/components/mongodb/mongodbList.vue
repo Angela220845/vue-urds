@@ -17,12 +17,12 @@
                     v-loading="loading">
                     <el-table-column
                       fixedID
-                      prop="service_id"
+                      prop="db_service_id"
                       label="服务ID"
                       width="100">
                     </el-table-column>
                     <el-table-column
-                      prop="mongodb_service_name"
+                      prop="db_service_name"
                       label="服务名称"
                       width="120">`
                     </el-table-column>
@@ -83,7 +83,7 @@
                       </template>
                     </el-table-column>
                       <el-table-column
-                      prop="group_name"
+                      prop="own_group_name"
                       label="用户组"
                       width="120">
                     </el-table-column>
@@ -110,19 +110,19 @@
                             查看
                           </span>
                           <el-dropdown-menu slot="dropdown">
-                            <router-link :to="'/mongodb_list/mongodb_overview?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_overview?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>概览</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_monitor?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_monitor?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>监控</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_report?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_report?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>巡检报告</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_backupset?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_backupset?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>备份集</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_params_change?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_params_change?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>参数变更</el-dropdown-item>
                             </router-link>
                           </el-dropdown-menu>
@@ -156,19 +156,19 @@
                             查看
                           </span>
                           <el-dropdown-menu slot="dropdown">
-                            <router-link :to="'/mongodb_list/mongodb_overview?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_overview?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>概览</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_monitor?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_monitor?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>监控</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_report?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_report?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>巡检报告</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_backupset?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_backupset?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>备份集</el-dropdown-item>
                             </router-link>
-                            <router-link :to="'/mongodb_list/mongodb_params_change?service_id='+scope.row.service_id">
+                            <router-link :to="'/mongodb_list/mongodb_params_change?db_service_id='+scope.row.db_service_id">
                               <el-dropdown-item>参数变更</el-dropdown-item>
                             </router-link>
                           </el-dropdown-menu>
@@ -237,7 +237,7 @@ export default {
   methods: {
     getMongodbTableData() {
       this.axiosApi
-        .get("/mongodb/search", {
+        .get("v3/mongodb/list_services", {
           zone_id: this.zoneName,
           order_by: "create_time",
           order: "desc",
