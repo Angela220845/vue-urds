@@ -22,6 +22,12 @@
       <el-col :span="12">
         <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
           <router-link to="/resource_statistics">
+          <router-link to="/dialog">
+            <el-menu-item index="8">
+              <i class="icon iconfont icon-resource"></i>
+              <span slot="title">弹框</span>
+            </el-menu-item>
+          </router-link>
             <el-menu-item index="1">
               <i class="icon iconfont icon-resource"></i>
               <span slot="title">资源统计</span>

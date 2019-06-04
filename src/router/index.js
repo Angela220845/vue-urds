@@ -24,7 +24,7 @@ export default new Router({
       },
       children: [{
         path: '/index',
-        redirect: '/resource_statistics'
+        redirect: '/dialog'
       },
         {
           path: '/resource_statistics',
@@ -256,6 +256,13 @@ export default new Router({
           component: resolve => require(['../components/serviceList/mongodbServiceList.vue'], resolve),
           meta: {
             title: '服务列表'
+          }
+        },
+        {
+          path: '/dialog',
+          component: resolve => require(['../components/public_dialog/main.vue'], resolve),
+          meta: {
+            title: '测试弹框'
           }
         }
       ]
