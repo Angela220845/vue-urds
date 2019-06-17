@@ -144,7 +144,7 @@ export default {
   },
   methods: {
     getStatisticsDetail() {
-      this.Axios.get("v3/statistics/list").then(res => {
+      this.axiosApi.get("v3/statistics/list").then(res => {
           this.loading = false;
         this.statisticsDetailObj = res.data;
         this.cpuPercent =
@@ -168,12 +168,12 @@ export default {
       // });
     },
     getCostsDetail() {
-      this.Axios.get("v3/statistics/total_costs").then(res => {
+      this.axiosApi.get("v3/statistics/total_costs").then(res => {
           this.loading = false;
           this.costsData = res;
           // 返回数据为空的时候是null
           console.log(res)
-        
+
       });
     }
   }

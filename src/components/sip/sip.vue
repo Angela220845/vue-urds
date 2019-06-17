@@ -1,7 +1,7 @@
 <template>
 <div class="title">
     <div class="action_btn">
-        <el-button type="primary">添加SIP</el-button>
+        <el-button type="primary" @click="openMask">添加SIP</el-button>
         <el-button type="danger" @click="showSipDetail">删除SIP</el-button>
     </div>
     <el-table
@@ -42,6 +42,7 @@
 
 <script>
 import deleteDialog from "./components/dialog";
+import addSipModal from "./components/addSipModal";
 export default {
   components: {
     deleteDialog
@@ -55,7 +56,8 @@ export default {
       sipData: [],
       sipDetail: [],
       isShow: false,
-      select_tr: "select_tr"
+      select_tr: "select_tr",
+      sendVal:false
     };
   },
   methods: {
@@ -89,6 +91,9 @@ export default {
     tableRowClassName({ row, rowIndex }) {
       //把每一行的索引放进row
       row.index = rowIndex;
+    },
+    openMask(){
+       this.sendVal = true;
     }
   }
 };

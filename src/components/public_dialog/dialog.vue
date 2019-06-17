@@ -152,7 +152,9 @@
     padding: 0 16px;
     box-sizing: border-box;
   }
-
+ .dialog .dialog-container .btns>div{
+    display: inline-block;
+ }
   .default-btn {
     color: #787878;
   }
@@ -163,6 +165,10 @@
 
   .danger-btn {
     background: #ef8c8c;
+    line-height: 30px;
+    padding: 0 10px;
+    border-radius: 5%;
+    color: white;
   }
 
   .confirm-btn {
