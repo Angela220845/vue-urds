@@ -5,9 +5,9 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-    path: '/',
-    redirect: '/login'
-  },
+      path: '/',
+      redirect: '/login'
+    },
     {
       path: '/login',
       component: resolve => require(['../components/login.vue'], resolve),
@@ -23,9 +23,9 @@ export default new Router({
         title: '首页'
       },
       children: [{
-        path: '/index',
-        redirect: '/dialog'
-      },
+          path: '/index',
+          redirect: '/dialog'
+        },
         {
           path: '/resource_statistics',
           // component: resolve =>
@@ -171,9 +171,9 @@ export default new Router({
         title: '管理页面'
       },
       children: [{
-        path: '/config',
-        redirect: '/admin'
-      },
+          path: '/config',
+          redirect: '/admin'
+        },
         {
           path: '/server',
           component: resolve => require(['../components/server/server.vue'], resolve),
