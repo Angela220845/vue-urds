@@ -260,7 +260,7 @@ export default new Router({
         },
         {
           path: '/dialog',
-          component: resolve => require(['../components/public_dialog/main.vue'], resolve),
+          component: resolve => require(['../common-components/modalForm.vue'], resolve),
           meta: {
             title: '测试弹框'
           }
